@@ -4,6 +4,7 @@ import pyttsx3
 import pywhatkit
 import speech_recognition as sr
 import time
+import agenda
 
 # Configurar síntesis de voz
 engine = pyttsx3.init()
@@ -16,6 +17,7 @@ meses = {
     "septiembre": "09", "octubre": "10", "noviembre": "11", "diciembre": "12"
 }
 
+""""funciones de escucha y habla"""
 def hablar(texto):
     engine.say(texto)
     engine.runAndWait()  # Asegura que el mensaje se complete antes de continuar
@@ -37,10 +39,53 @@ def escuchar():
             hablar("Error al conectar con el servicio de reconocimiento de voz.")
             return None
 
+
 # Enviar mensaje de WhatsApp
 def enviar_whatsapp(contacto, mensaje):
-    pywhatkit.sendwhatmsg_instantly(contacto, mensaje)
-    hablar(f"Mensaje enviado a {contacto}")
+   
+      
+    b = contacto.split("+34")
+    try:
+        b[1] 
+        if len(b[1]) == 9:  #combrobar los caracters
+            print("es un telefono") 
+            numero_sin = int(b[1][0]) 
+            if numero_sin == 6 or numero_sin == 7: #combrueba si es un movil
+                print("es un movil")
+                pywhatkit.sendwhatmsg_instantly(contacto, mensaje)
+                hablar(f"mensaje enviado a {contacto}, mensaje: {mensaje} sin vbse")
+
+    except IndexError:
+        a = agenda.buscar_contactos(contacto)
+        if a:
+            nombre, numero = a
+            pywhatkit.sendwhatmsg_instantly(numero, mensaje)
+            hablar(f"mensaje enviado a {numero}, mensaje: {mensaje} con base")
+        hablar("no se ha encontrado a la persona")
+
+def crear_contacto():
+    hablar("Diga nombre de la persona")
+    nom = escuchar()
+    hablar("Diga numero de telefono con prefijo")
+    numero = escuchar()
+    hablar("diga email")
+    email = escuchar()
+    num = numero.replace("más", "+")
+    num = numero.replace(" ", "")
+    
+    print(num)
+    b = num.split("+34")
+    try:
+        b[1] 
+        if len(b[1]) == 9:  #combrobar los caracters
+            print("es un telefono") 
+            numero_sin = int(b[1][0]) 
+            if numero_sin == 6 or numero_sin == 7: #combrueba si es un movil
+                print("es un movil")
+                agenda.agregar_contacto(nom, num, email)
+
+    except IndexError:
+        hablar("No se ha indicado prefijo")
 
 # Reproducir videos de YouTube
 def reproducir_youtube(busqueda):
@@ -50,6 +95,9 @@ def reproducir_youtube(busqueda):
 def buscar_google(busqueda):
     pywhatkit.search(busqueda)
     hablar(f"buscando {busqueda} en google")
+
+
+""""funcinones relacionadas con cosas de recordatorios"""
 
 def crear_nota():
     hablar("¿Qué quieres que escriba en la nota?")
@@ -73,7 +121,6 @@ def mostrar_calendario():
     hablar("buscando en el calendario")
     hablar(calendario.listar_eventos())
 
-#mejorar para que sea mejor
 def crear_calendario():
     hablar("estás creando un evento")
     hablar("Indica nombre del evento.")
@@ -100,6 +147,10 @@ def crear_calendario():
     else:
         hablar(a)
     
+
+
+""""funciones ejecucion
+    son las que se encargan de gestionar todo"""
 # Función principal que ejecuta las acciones después de la activación
 def ejecutar_asistente():
     hablar("Estoy escuchando, ¿en qué puedo ayudarte?")
@@ -133,6 +184,9 @@ def ejecutar_asistente():
             elif 'nota' in comando and 'leer' in comando:
                 leer_nota()
             
+            elif 'crear' in comando and 'contacto' in comando:
+                crear_contacto()
+
             elif 'calendario' in comando and 'leer' in comando:
                 mostrar_calendario()
             
