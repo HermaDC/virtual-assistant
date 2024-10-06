@@ -9,7 +9,7 @@ build/*
 dist/alfa0.01/_internal/*
 
 #archivos de configuración
-*.spec
+*.spec 
 *.log
 prueba.py
 
