@@ -10,7 +10,6 @@ dist/alfa0.01/_internal/*
 
 #archivos de configuración
 *.spec 
-*.log
 prueba.py
 calendario.json
 
