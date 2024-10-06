@@ -12,7 +12,7 @@ dist/alfa0.01/_internal/*
 *.spec 
 *.log
 prueba.py
+calendario.json
 
 #archivos sensibles
 *.db
-calendario.json
