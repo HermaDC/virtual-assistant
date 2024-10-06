@@ -10,20 +10,23 @@ import agenda
 engine = pyttsx3.init()
 
 #constantes y varibles inicializadoras
-
 meses = {
     "enero": "01", "febrero": "02", "marzo": "03", "abril": "04",
     "mayo": "05", "junio": "06", "julio": "07", "agosto": "08",
     "septiembre": "09", "octubre": "10", "noviembre": "11", "diciembre": "12"
 }
 
+
 """"funciones de escucha y habla"""
-def hablar(texto):
-    engine.say(texto)
-    engine.runAndWait()  # Asegura que el mensaje se complete antes de continuar
+def hablar(texto:str) -> None:
+    """Habla un texto"""
+    if texto:
+        engine.say(texto)
+        engine.runAndWait()  # Asegura que el mensaje se complete antes de continuar
 
 # Configuración de reconocimiento de voz
-def escuchar():
+def escuchar() -> str:
+    """Escucha y devuelve un string"""
     r = sr.Recognizer()
     with sr.Microphone() as source:
         print("Escuchando...")
@@ -41,9 +44,8 @@ def escuchar():
 
 
 # Enviar mensaje de WhatsApp
-def enviar_whatsapp(contacto, mensaje):
-   
-      
+def enviar_whatsapp(contacto, mensaje) -> None:
+    """Envia un whatsapp"""
     b = contacto.split("+34")
     try:
         b[1] 
@@ -63,52 +65,32 @@ def enviar_whatsapp(contacto, mensaje):
             hablar(f"mensaje enviado a {numero}, mensaje: {mensaje} con base")
         hablar("no se ha encontrado a la persona")
 
-def crear_contacto():
-    hablar("Diga nombre de la persona")
-    nom = escuchar()
-    hablar("Diga numero de telefono con prefijo")
-    numero = escuchar()
-    hablar("diga email")
-    email = escuchar()
+def crear_contacto(nom: str="", numero: str="", email: str="") -> None:
     num = numero.replace("más", "+")
     num = numero.replace(" ", "")
-    
-    print(num)
-    b = num.split("+34")
-    try:
-        b[1] 
-        if len(b[1]) == 9:  #combrobar los caracters
-            print("es un telefono") 
-            numero_sin = int(b[1][0]) 
-            if numero_sin == 6 or numero_sin == 7: #combrueba si es un movil
-                print("es un movil")
-                agenda.agregar_contacto(nom, num, email)
 
-    except IndexError:
-        hablar("No se ha indicado prefijo")
+    agenda.agregar_contacto(nom, num, email)
 
 # Reproducir videos de YouTube
-def reproducir_youtube(busqueda):
+def reproducir_youtube(busqueda:str="") -> None:
     pywhatkit.playonyt(busqueda)
     hablar(f"Reproduciendo {busqueda} en YouTube")
 
-def buscar_google(busqueda):
+def buscar_google(busqueda:str="") -> None:
     pywhatkit.search(busqueda)
     hablar(f"buscando {busqueda} en google")
 
 
 """"funcinones relacionadas con cosas de recordatorios"""
 
-def crear_nota():
-    hablar("¿Qué quieres que escriba en la nota?")
-    contenido = escuchar()
-    
+def crear_nota(contenido: str="") -> None:
+
     if contenido:
         with open("nota.txt", "a") as archivo:  # Guardar en un archivo "nota.txt"
             archivo.write(contenido + "\n")
         hablar("He guardado la nota.")
 
-def leer_nota():
+def leer_nota() -> None:
     if os.path.exists("nota.txt"):
         with open("nota.txt", "r") as archivo:
             contenido = archivo.read()
@@ -117,26 +99,23 @@ def leer_nota():
     else:
         hablar("No tienes ninguna nota guardada.")
 
-def mostrar_calendario():
+def mostrar_calendario() -> None:
     hablar("buscando en el calendario")
     hablar(calendario.listar_eventos())
 
-def crear_calendario():
-    hablar("estás creando un evento")
-    hablar("Indica nombre del evento.")
-    nombre = escuchar()
-    hablar("Di fecha del evento.")
-    fecha = escuchar()
-    hablar("Di hora del evento.")
-    hora = escuchar()
+def crear_calendario(nombre: str="", fecha: str="", hora:str="") -> None:
+    
     try:
+        print(fecha)
         partes = fecha.split()
         dia = partes[0]
-        mes = meses[partes[2]]
-        año = partes[4]
+        mes = meses[partes[1]]
+        año = partes[2]
 
+        print(partes)
         fecha_format = f"{año}-{mes}-{dia.zfill(2)}"
-    except:
+        print(fecha_format)
+    except ValueError:
         hablar("error en la fecha")
         return
     print(nombre, fecha, hora, fecha_format)
@@ -166,42 +145,47 @@ def ejecutar_asistente():
                 mensaje = escuchar()
                 enviar_whatsapp(contacto, mensaje)
                 print(mensaje)
-                
             elif 'youtube' in comando or 'video' in comando:
                 hablar("¿Qué video te gustaría ver en YouTube?")
                 busqueda = escuchar()
                 reproducir_youtube(busqueda)
                 print(busqueda)
-            
             elif 'buscar' in comando or 'busca' in comando:
                 hablar("¿Qué te gustaría buscar en Google?")
                 busqueda = escuchar()
                 buscar_google(busqueda)
-            
             elif 'nota' in comando and 'crear' in comando:
-                crear_nota()
-            
+                hablar("¿Qué quieres que escriba en la nota?")
+                contenido = escuchar()
+                crear_nota(contenido)
             elif 'nota' in comando and 'leer' in comando:
                 leer_nota()
-            
             elif 'crear' in comando and 'contacto' in comando:
-                crear_contacto()
-
+                hablar("Diga nombre de la persona")
+                nom = escuchar()
+                hablar("Diga numero de telefono con prefijo")
+                numero = escuchar()
+                hablar("diga email")
+                email = escuchar()
+                crear_contacto(nom, numero, email)
             elif 'calendario' in comando and 'leer' in comando:
                 mostrar_calendario()
-            
-            elif 'calendario' in comando and 'crear' in comando:    
-                crear_calendario()
-
+            elif 'calendario' in comando and 'crear' in comando:  
+                hablar("estás creando un evento")
+                hablar("Indica nombre del evento.")
+                nombre = escuchar()
+                hablar("Di fecha del evento.")
+                fecha = escuchar()
+                hablar("Di hora del evento.")
+                hora = escuchar()  
+                crear_calendario(nombre, fecha, hora)
             elif 'gracias' in comando:
                 hablar("pasando a modo segundo plano")
                 activar_asistente()
                 break
-
             elif 'adiós' in comando or 'salir' in comando:
                 hablar("Hasta luego, ¡nos vemos pronto!")
                 raise SystemExit
-                
             else:
                 hablar("No entiendo ese comando. ¿Puedes repetirlo?")
         time.sleep(1)

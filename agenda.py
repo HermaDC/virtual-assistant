@@ -15,16 +15,31 @@ CREATE TABLE IF NOT EXISTS contactos (
 ''')
 
 # Función para agregar un contacto
-def agregar_contacto(nombre, telefono="0", email=""):
-    cursor.execute('''
-    INSERT INTO contactos (nombre, telefono, email)
-    VALUES (?, ?, ?)
-    ''', (nombre, telefono, email))
-    conn.commit()
-    print(f'Contacto {nombre} agregado.')
+def agregar_contacto(nombre:str, telefono="0", email="") -> None:
+    """Agrega un contacto a la agenda"""
+    #print(telefono)
+    b = telefono.split("+34")
+    try:
+        b[1] 
+        if len(b[1]) == 9:  #combrobar los caracters
+            #print("es un telefono") 
+            numero_sin = int(b[1][0]) 
+            if numero_sin == 6 or numero_sin == 7: #combrueba si es un movil
+                #print("es un movil")
+                cursor.execute('''
+                INSERT INTO contactos (nombre, telefono, email)
+                VALUES (?, ?, ?)
+                ''', (nombre, telefono, email))
+                conn.commit()
+                print(f'Contacto {nombre} agregado.')
+
+    except IndexError:
+        print(f"Numero no valido. Debe empezar con +34 {telefono}")
+        
 
 # Función para mostrar todos los contactos
-def buscar_contactos(filtro):
+def buscar_contactos(filtro: str) -> str:
+    """Busca un contacto en la agenda"""
     cursor.execute("""SELECT * FROM contactos WHERE nombre like '{}'""".format(filtro))
     contactos = cursor.fetchall()
     try:
@@ -40,7 +55,8 @@ def buscar_contactos(filtro):
     
 
 # Función principal
-def main():
+def main() -> None:
+    """Funcion no util. Es la interfaz"""
     while True:
 
         try:

@@ -6,19 +6,20 @@ from datetime import datetime
 FILE_PATH = 'calendario.json'
 
 # Cargar los eventos desde el archivo JSON
-def cargar_eventos():
+def cargar_eventos() -> list:
     if os.path.exists(FILE_PATH):
         with open(FILE_PATH, 'r') as archivo:
             return json.load(archivo)
     return []
 
 # Guardar los eventos en el archivo JSON
-def guardar_eventos(eventos):
+def guardar_eventos(eventos) -> None:
     with open(FILE_PATH, 'w') as archivo:
         json.dump(eventos, archivo, indent=4)
 
 # Agregar un evento al calendario
-def agregar_evento(nombre=None, fecha=None, hora="00:00"):
+def agregar_evento(nombre: str=None, fecha: str=None, hora="00:00") -> str:
+    
     if not nombre:
         nombre = input("Nombre del evento: ")
         fecha_str = input("Fecha del evento (YYYY-MM-DD): ")
@@ -39,17 +40,18 @@ def agregar_evento(nombre=None, fecha=None, hora="00:00"):
         })
 
         return
-        
+    print(fecha, hora)
     try:
-        fecha = datetime.strptime(f"{fecha} {hora}", '%y-%m-%d %H:%M')   
+        fecha = datetime.strptime(f"{fecha} {hora}", '%Y-%m-%d %H:%M')   
     except ValueError:
         print("no vale")
         return
 
     eventos = cargar_eventos()
+    print(f"nombre: {nombre} fecha: {str(fecha)} hora: {hora}")
     eventos.append({
             'nombre': nombre,
-            'fecha': fecha,
+            'fecha': str(fecha),
             'hora': hora
         })
 
@@ -59,20 +61,19 @@ def agregar_evento(nombre=None, fecha=None, hora="00:00"):
     return f"Evento '{nombre}' agregado con éxito."
 
 # Listar todos los eventos
-def listar_eventos():
+def listar_eventos() -> str:
     eventos = cargar_eventos()
     if not eventos:
         print("No hay eventos programados.\n")
-        print("---+---+---+---+---+--- \n \n")
+        #print("---+---+---+---+---+--- \n \n")
     else:
         print("Eventos programados:")
         for i, evento in enumerate(eventos, start=1):
             print(f"{i}. {evento['nombre']} - Fecha: {evento['fecha']} Hora: {evento['hora']}")
             return f"{i}. {evento['nombre']}. Fecha: {evento['fecha']}"
- 
 
 # Eliminar un evento
-def eliminar_evento(num_evento=None):
+def eliminar_evento(num_evento: int=None) -> None:
     listar_eventos()
     eventos = cargar_eventos()
     if eventos:
@@ -86,7 +87,6 @@ def eliminar_evento(num_evento=None):
                 print("Número de evento inválido.")
         evento = eventos.pop(num_evento - 1)
         guardar_eventos(eventos)
-
 
 # Archivar eventos pasados
 def archivar_eventos():
@@ -110,7 +110,7 @@ def archivar_eventos():
     print(f"{len(eventos_archivados)} eventos archivados.")
 
 # Menú principal
-def menu():
+def menu() -> None:
     while True:
         print("\n--- Calendario de Eventos ---")
         print("1. Agregar evento")

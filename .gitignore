@@ -10,5 +10,9 @@ dist/alfa0.01/_internal/*
 
 #archivos de configuración
 *.spec
-
+*.log
 prueba.py
+
+#archivos sensibles
+*.db
+calendario.json
