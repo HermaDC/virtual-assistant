@@ -1,8 +1,8 @@
+import directorio
 import pyttsx3
 import speech_recognition as sr
 import time
-import directorio
-
+import os
 
 # Configurar síntesis de voz
 engine = pyttsx3.init()
@@ -13,7 +13,6 @@ meses = {
     "mayo": "05", "junio": "06", "julio": "07", "agosto": "08",
     "septiembre": "09", "octubre": "10", "noviembre": "11", "diciembre": "12"
 }
-
 
 """"funciones de escucha y habla"""
 def hablar(texto:str) -> None:
@@ -40,37 +39,29 @@ def escuchar() -> str:
             hablar("Error al conectar con el servicio de reconocimiento de voz.")
             return None
 
-
-# Enviar mensaje de WhatsApp
-
-
 """"funciones ejecucion
     son las que se encargan de gestionar todo"""
 # Función principal que ejecuta las acciones después de la activación
 def ejecutar_asistente() -> None:
     hablar("Estoy escuchando, ¿en qué puedo ayudarte?")
-    
     while True:
         comando = escuchar()
-        
-        
         if comando:
-                    if 'mensaje' in comando:
+                    if 'Manda un mensaje' in comando:
                         hablar("¿A quién le quieres enviar el mensaje?")
                         contacto = escuchar()
                         hablar("¿Qué mensaje le quieres enviar?")
                         mensaje = escuchar()
                         hablar(directorio.enviar_whatsapp(contacto, mensaje))
-
                     #notas
-                    elif 'crear' in comando and 'nota' in comando:
+                    elif ('crear' in comando and 'nota' in comando) or "crea una nota" in comando:
                         hablar("¿Qué quieres que escriba en la nota?")
                         contenido = escuchar()
                         hablar(directorio.crear_nota(contenido))
-                    elif 'leer' in comando and 'nota' in comando:
+                    elif ('leer' in comando and 'nota' in comando) or "lee las notas" in comando:
                         hablar(directorio.leer_nota())
                     #agenda
-                    elif 'crear' in comando and 'contacto' in comando:
+                    elif ('crear' in comando and 'contacto' in comando) or "crea un contacto" in comando:
                         hablar("Diga nombre de la persona")
                         nom = escuchar()
                         hablar("Diga numero de telefono con prefijo")
@@ -78,14 +69,14 @@ def ejecutar_asistente() -> None:
                         hablar("diga email")
                         email = escuchar()
                         hablar(directorio.crear_contacto(nom, numero, email))
-                    elif 'borrar' in comando and 'contacto' in comando:
+                    elif ('borrar' in comando and 'contacto' in comando) or "borra un contacto" in comando:
                         hablar("¿Que contacto quieres borrar?")
                         nombre = escuchar()
                         directorio.borrar_contacto(nombre)
                     #calendario
-                    elif 'leer' in comando and 'calendario' in comando:
+                    elif ('leer' in comando and 'calendario' in comando) or "lee el calendario" in comando:
                         hablar(directorio.mostrar_calendario())
-                    elif 'crear' in comando and 'calendario' in comando:  
+                    elif ('crear' in comando and 'calendario' in comando) or "crea un evento" in comando:  
                         hablar("estás creando un evento")
                         hablar("Indica nombre del evento.")
                         nombre = escuchar()
@@ -94,20 +85,24 @@ def ejecutar_asistente() -> None:
                         hablar("Di hora del evento.")
                         hora = escuchar()
                         hablar(directorio.crear_calendario(nombre, fecha, hora))
-                    
                     # Internet y youtube  
                     elif 'youtube' in comando or 'video' in comando:
                         hablar("¿Qué video te gustaría ver en YouTube?")
                         busqueda = escuchar()
                         hablar(directorio.reproducir_youtube(busqueda))
-                    elif 'buscar' in comando and 'google' or 'busca' in comando:
+                    elif ('buscar' in comando and 'google') or 'busca' in comando:
                         hablar("¿Qué te gustaría buscar en Google?")
                         busqueda = escuchar()
                         hablar(directorio.buscar_google(busqueda))
                     # Otras funciones
+                    elif "abre" in comando:
+                        hablar("que aplicación abro")
+                        instrucc = escuchar()
+                        print(instrucc)
+                        os.system(instrucc) if instrucc else None
                     elif 'gracias' in comando:
                         hablar("pasando a modo segundo plano")
-                        
+                        activar_asistente()
                         break
                     elif 'adiós' in comando or 'salir' in comando:
                         hablar("Hasta luego, ¡nos vemos pronto!")

@@ -1,7 +1,7 @@
-import pywhatkit
 import agenda
-import os.path
 import calendario
+import os.path
+import pywhatkit
 
 meses = {
     "enero": "01", "febrero": "02", "marzo": "03", "abril": "04",
@@ -58,6 +58,9 @@ def leer_nota() -> str:
 def crear_contacto(nom: str="", numero: str="", email: str="") -> None:
     num = numero.replace("más", "+")
     num = numero.replace(" ", "")
+    mail = email.replace("arroba", "@")
+    mail = email.replace("punto", ".")
+    mail = email.replace(" ", "")
 
     return (agenda.agregar_contacto(nom, num, email))
 def borrar_contacto(nombre: str):

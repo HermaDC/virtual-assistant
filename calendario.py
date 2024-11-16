@@ -1,6 +1,6 @@
+from datetime import datetime
 import json
 import os
-from datetime import datetime
 
 # Ruta del archivo JSON donde se almacenarán los eventos
 FILE_PATH = 'calendario.json'
