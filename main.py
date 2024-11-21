@@ -15,14 +15,14 @@ meses = {
 }
 
 """"funciones de escucha y habla"""
-def hablar(texto:str) -> None:
+def talk(texto:str) -> None:
     """Habla un texto"""
     if texto:
         engine.say(texto)
         engine.runAndWait()  # Asegura que el mensaje se complete antes de continuar
 
 # Configuración de reconocimiento de voz
-def escuchar() -> str:
+def listen() -> str:
     """Escucha y devuelve un string"""
     r = sr.Recognizer()
     with sr.Microphone() as source:
@@ -33,79 +33,79 @@ def escuchar() -> str:
             print(f"Comando recibido: {comando}")
             return comando.lower()
         except sr.UnknownValueError:
-            hablar("Repite, no entendí eso.")
+            talk("Repite, no entendí eso.")
             return None
         except sr.RequestError:
-            hablar("Error al conectar con el servicio de reconocimiento de voz.")
+            talk("Error al conectar con el servicio de reconocimiento de voz.")
             return None
 
 """"funciones ejecucion
     son las que se encargan de gestionar todo"""
 # Función principal que ejecuta las acciones después de la activación
-def ejecutar_asistente() -> None:
-    hablar("Estoy escuchando, ¿en qué puedo ayudarte?")
+def run_assistant() -> None:
+    talk("Estoy escuchando, ¿en qué puedo ayudarte?")
     while True:
-        comando = escuchar()
-        if comando:
-                    if 'Manda un mensaje' in comando:
-                        hablar("¿A quién le quieres enviar el mensaje?")
-                        contacto = escuchar()
-                        hablar("¿Qué mensaje le quieres enviar?")
-                        mensaje = escuchar()
-                        hablar(directorio.enviar_whatsapp(contacto, mensaje))
+        comand = listen()
+        if comand:
+                    if 'Manda un mensaje' in comand:
+                        talk("¿A quién le quieres enviar el mensaje?")
+                        contact = listen()
+                        talk("¿Qué mensaje le quieres enviar?")
+                        mensage = listen()
+                        talk(directorio.send_whatsapp_message(contact, mensage))
                     #notas
-                    elif ('crear' in comando and 'nota' in comando) or "crea una nota" in comando:
-                        hablar("¿Qué quieres que escriba en la nota?")
-                        contenido = escuchar()
-                        hablar(directorio.crear_nota(contenido))
-                    elif ('leer' in comando and 'nota' in comando) or "lee las notas" in comando:
-                        hablar(directorio.leer_nota())
+                    elif ('crear' in comand and 'nota' in comand) or "crea una nota" in comand:
+                        talk("¿Qué quieres que escriba en la nota?")
+                        content = listen()
+                        talk(directorio.create_note(content))
+                    elif ('leer' in comand and 'nota' in comand) or "lee las notas" in comand:
+                        talk(directorio.read_notes())
                     #agenda
-                    elif ('crear' in comando and 'contacto' in comando) or "crea un contacto" in comando:
-                        hablar("Diga nombre de la persona")
-                        nom = escuchar()
-                        hablar("Diga numero de telefono con prefijo")
-                        numero = escuchar()
-                        hablar("diga email")
-                        email = escuchar()
-                        hablar(directorio.crear_contacto(nom, numero, email))
-                    elif ('borrar' in comando and 'contacto' in comando) or "borra un contacto" in comando:
-                        hablar("¿Que contacto quieres borrar?")
-                        nombre = escuchar()
-                        directorio.borrar_contacto(nombre)
+                    elif ('crear' in comand and 'contacto' in comand) or "crea un contacto" in comand:
+                        talk("Diga nombre de la persona")
+                        nom = listen()
+                        talk("Diga numero de telefono con prefijo")
+                        name = listen()
+                        talk("diga email")
+                        email = listen()
+                        talk(directorio.create_contact(nom, name, email))
+                    elif ('borrar' in comand and 'contacto' in comand) or "borra un contacto" in comand:
+                        talk("¿Que contacto quieres borrar?")
+                        name = listen()
+                        directorio.delete_contact(name)
                     #calendario
-                    elif ('leer' in comando and 'calendario' in comando) or "lee el calendario" in comando:
-                        hablar(directorio.mostrar_calendario())
-                    elif ('crear' in comando and 'calendario' in comando) or "crea un evento" in comando:  
-                        hablar("estás creando un evento")
-                        hablar("Indica nombre del evento.")
-                        nombre = escuchar()
-                        hablar("Di fecha del evento.")
-                        fecha = escuchar()
-                        hablar("Di hora del evento.")
-                        hora = escuchar()
-                        hablar(directorio.crear_calendario(nombre, fecha, hora))
+                    elif ('leer' in comand and 'calendario' in comand) or "lee el calendario" in comand:
+                        talk(directorio.show_calendar())
+                    elif ('crear' in comand and 'calendario' in comand) or "crea un evento" in comand:  
+                        talk("estás creando un evento")
+                        talk("Indica nombre del evento.")
+                        name = listen()
+                        talk("Di fecha del evento.")
+                        date = listen()
+                        talk("Di hora del evento.")
+                        hour = listen()
+                        talk(directorio.create_calendar(name, date, hour))
                     # Internet y youtube  
-                    elif 'youtube' in comando or 'video' in comando:
-                        hablar("¿Qué video te gustaría ver en YouTube?")
-                        busqueda = escuchar()
-                        hablar(directorio.reproducir_youtube(busqueda))
-                    elif ('buscar' in comando and 'google') or 'busca' in comando:
-                        hablar("¿Qué te gustaría buscar en Google?")
-                        busqueda = escuchar()
-                        hablar(directorio.buscar_google(busqueda))
+                    elif 'youtube' in comand or 'video' in comand:
+                        talk("¿Qué video te gustaría ver en YouTube?")
+                        search = listen()
+                        talk(directorio.play_youtube(search))
+                    elif ('buscar' in comand and 'google') or 'busca' in comand:
+                        talk("¿Qué te gustaría buscar en Google?")
+                        search = listen()
+                        talk(directorio.search_google(search))
                     # Otras funciones
-                    elif "abre" in comando:
-                        hablar("que aplicación abro")
-                        instrucc = escuchar()
+                    elif "abre" in comand:
+                        talk("¿qué aplicación abro?")
+                        instrucc = listen()
                         print(instrucc)
                         os.system(instrucc) if instrucc else None
-                    elif 'gracias' in comando:
-                        hablar("pasando a modo segundo plano")
+                    elif 'gracias' in comand:
+                        talk("pasando a modo segundo plano")
                         activar_asistente()
                         break
-                    elif 'adiós' in comando or 'salir' in comando:
-                        hablar("Hasta luego, ¡nos vemos pronto!")
+                    elif 'adiós' in comand or 'salir' in comand:
+                        talk("Hasta luego, ¡nos vemos pronto!")
                         raise SystemExit
                     else:
                         print("No entiendo ese comando. ¿Puedes repetirlo?")
@@ -117,27 +117,27 @@ def activar_asistente() -> None:
     mic = sr.Microphone()
 
     print("listo...")
-    hablar("Asistente listo. Di 'Hey Barpsy' para activarlo.")
+    talk("Asistente listo. Di 'Hey Barpsy' para activarlo.")
 
     while True:
         with mic as source:
             print("Escuchando palabra clave...")
             audio = r.listen(source)
             try:
-                comando = r.recognize_google(audio, language="es-ES").lower()
-                print(f"Comando detectado: {comando}")
-                if 'hey barsi' in comando:
-                    hablar("Hola, Barpsy activado.")
-                    ejecutar_asistente()  # Llama a la función principal
+                comand = r.recognize_google(audio, language="es-ES").lower()
+                print(f"Comando detectado: {comand}")
+                if 'hey barsi' in comand:
+                    talk("Hola, Barpsy activado.")
+                    run_assistant()  # Llama a la función principal
                     break
-                elif 'salir' in comando or 'cerrar' in comando:
+                elif 'salir' in comand or 'cerrar' in comand:
                     raise SystemExit
                 else:
                     print("No se detectó la palabra clave.")
             except sr.UnknownValueError:
                 print("No entendí el comando.")
             except sr.RequestError:
-                hablar("Error al conectar con el servicio de reconocimiento de voz.")
+                talk("Error al conectar con el servicio de reconocimiento de voz.")
 
             time.sleep(1)
 

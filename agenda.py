@@ -15,10 +15,10 @@ CREATE TABLE IF NOT EXISTS contactos (
 ''')
 
 # Función para agregar un contacto
-def agregar_contacto(nombre:str, telefono="0", email="") -> str:
+def add_contact(name:str, teleph="0", email="") -> str:
     """Agrega un contacto a la agenda"""
     #print(telefono)
-    b = telefono.split("+34")
+    b = teleph.split("+34")
     try:
         b[1] 
         if len(b[1]) == 9:  #combrobar los caracters
@@ -27,18 +27,18 @@ def agregar_contacto(nombre:str, telefono="0", email="") -> str:
             if numero_sin == 6 or numero_sin == 7: #combrueba si es un movil
                 #print("es un movil")
                 cursor.execute('''
-                INSERT INTO contactos (nombre, telefono, email) VALUES (?, ?, ?)''', (nombre, telefono, email))
+                INSERT INTO contactos (nombre, telefono, email) VALUES (?, ?, ?)''', (name, teleph, email))
                 conn.commit()
                 if __name__ != "__main__":
                     conn.close()
-                return(f'Contacto {nombre} agregado.')
+                return(f'Contacto {name} agregado.')
 
     except IndexError:
-        print(f"Numero no valido. Debe empezar con +34 {telefono}")
-        return(f"Numero no valido. Debe empezar con +34 {telefono}")
+        print(f"Numero no valido. Debe empezar con +34 {teleph}")
+        return(f"Numero no valido. Debe empezar con +34 {teleph}")
         
 # Función para mostrar todos los contactos
-def buscar_contactos(filtro: str) -> str:
+def search_contact(filtro: str) -> str:
     """Busca un contacto en la agenda"""
     cursor.execute("""SELECT * FROM contactos WHERE nombre like '{}'""".format(filtro))
     contactos = cursor.fetchall()
@@ -53,7 +53,7 @@ def buscar_contactos(filtro: str) -> str:
     except IndexError:
         return None
     
-def borrar_contacto(nom: str) -> None:
+def delete_contact(nom: str) -> None:
     cursor.execute(f"""DELETE FROM contactos WHERE nombre='{nom}'""")    
     conn.commit()
     if __name__ != "__main__":
@@ -77,13 +77,13 @@ def main() -> None:
                 nombre = input("\nNombre: ")
                 telefono = input("Teléfono: ")
                 email = input("Email: ")
-                print(agregar_contacto(nombre, telefono, email))
+                print(add_contact(nombre, telefono, email))
             elif opcion == '2':
                 nombre = input("\nNombre: ")
-                print(buscar_contactos(nombre))
+                print(search_contact(nombre))
             elif opcion == '3':
                 nombre = input("\nNombre: ")
-                borrar_contacto(nombre)
+                delete_contact(nombre)
             elif opcion == '4':
                 break
                 

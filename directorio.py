@@ -12,41 +12,40 @@ meses = {
 
 
 # Enviar mensaje de WhatsApp
-def enviar_whatsapp(contacto: str, mensaje: str) -> str:
+def send_whatsapp_message(contact: str, mensage: str) -> str:
     """Envia un whatsapp"""
-    b = contacto.split("+34")
+    b = contact.split("+34")
     try:
         b[1] 
         if len(b[1]) == 9:  #combrobar los caracters
             #es un movil
             numero_sin = int(b[1][0]) 
             if numero_sin == 6 or numero_sin == 7: #combrueba si es un movil
-                pywhatkit.sendwhatmsg_instantly(contacto, mensaje)
-                return(f"mensaje enviado a {contacto}, mensaje: {mensaje} sin vbse")
+                pywhatkit.sendwhatmsg_instantly(contact, mensage)
+                return(f"mensaje enviado a {contact}, mensaje: {mensage} sin contacto")
 
     except IndexError:
-        a = agenda.buscar_contactos(contacto)
+        a = agenda.buscar_contactos(contact)
         if a:
             nombre, numero = a
-            pywhatkit.sendwhatmsg_instantly(numero, mensaje)
-            return(f"mensaje enviado a {numero}, mensaje: {mensaje} con base")
+            pywhatkit.sendwhatmsg_instantly(numero, mensage)
+            return(f"mensaje enviado a {numero}, mensaje: {mensage} con contacto")
         return("no se ha encontrado a la persona")
 
 # Reproducir videos de YouTube
-def buscar_google(busqueda:str="") -> str:
-    pywhatkit.search(busqueda)
-    return(f"buscando {busqueda} en google")
-def reproducir_youtube(busqueda:str="") -> str:
-    pywhatkit.playonyt(busqueda)
-    return(f"Reproduciendo {busqueda} en YouTube")
+def search_google(search:str="") -> str:
+    pywhatkit.search(search)
+    return(f"buscando {search} en google")
+def play_youtube(search:str="") -> str:
+    pywhatkit.playonyt(search)
+    return(f"Reproduciendo {search} en YouTube")
 
-def crear_nota(contenido: str="") -> str:
-
-    if contenido:
+def create_note(content: str="") -> str:
+    if content:
         with open("nota.txt", "a") as archivo:  # Guardar en un archivo "nota.txt"
-            archivo.write(contenido + "\n")
+            archivo.write(content + "\n")
         return("He guardado la nota.")
-def leer_nota() -> str:
+def read_notes() -> str:
     if os.path.exists("nota.txt"):
         with open("nota.txt", "r") as archivo:
             contenido = archivo.read()
@@ -55,37 +54,34 @@ def leer_nota() -> str:
     else:
         return("No tienes ninguna nota guardada.")
 
-def crear_contacto(nom: str="", numero: str="", email: str="") -> None:
-    num = numero.replace("más", "+")
-    num = numero.replace(" ", "")
-    mail = email.replace("arroba", "@")
-    mail = email.replace("punto", ".")
-    mail = email.replace(" ", "")
+def create_contact(nom: str="", number: str="", mail: str="") -> None:
+    num = number.replace("más", "+").replace(" ", "")
+    email = mail.replace("arroba", "@").replace("punto", ".").replace(" ", "")
 
-    return (agenda.agregar_contacto(nom, num, email))
-def borrar_contacto(nombre: str):
-    return agenda.borrar_contacto(nombre)
+    return (agenda.add_contact(nom, num, email))
+def delete_contact(name: str):
+    return agenda.delete_contact(name)
 
 
-def mostrar_calendario() -> str:
-    return("buscando en el calendario", calendario.listar_eventos())
-def crear_calendario(nombre: str="", fecha: str="", hora:str="") -> str:
+def show_calendar() -> str:
+    return("buscando en el calendario", calendario.show_event())
+def create_calendar(name: str="", date: str="", hora:str="") -> str:
     
     try:
-        print(fecha)
-        partes = fecha.split()
+        print(date)
+        partes = date.split()
         dia = partes[0]
         mes = meses[partes[1]]
         año = partes[2]
 
         print(partes)
-        fecha_format = f"{año}-{mes}-{dia.zfill(2)}"
-        print(fecha_format)
+        format_date = f"{año}-{mes}-{dia.zfill(2)}"
+        print(format_date)
     except ValueError:
         return("error en la fecha")
         return
-    print(nombre, fecha, hora, fecha_format)
-    a = calendario.agregar_evento(nombre, fecha_format, hora)
+    print(name, date, hora, format_date)
+    a = calendario.add_events(name, format_date, hora)
     if not a:
         return("ha ocurrido un error")
     else:
