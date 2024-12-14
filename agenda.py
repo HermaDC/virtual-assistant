@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS contactos (
 
 # Función para agregar un contacto
 def add_contact(name:str, teleph="0", email="") -> str:
-    """Agrega un contacto a la agenda"""
+    """Adds a contact"""
     #print(telefono)
     b = teleph.split("+34")
     try:
@@ -39,7 +39,7 @@ def add_contact(name:str, teleph="0", email="") -> str:
         
 # Función para mostrar todos los contactos
 def search_contact(filtro: str) -> str:
-    """Busca un contacto en la agenda"""
+    """Search for a contact"""
     cursor.execute("""SELECT * FROM contactos WHERE nombre like '{}'""".format(filtro))
     contactos = cursor.fetchall()
     try:
@@ -54,6 +54,7 @@ def search_contact(filtro: str) -> str:
         return None
     
 def delete_contact(nom: str) -> None:
+    """deletes a contact"""
     cursor.execute(f"""DELETE FROM contactos WHERE nombre='{nom}'""")    
     conn.commit()
     if __name__ != "__main__":

@@ -7,6 +7,7 @@ FILE_PATH = 'calendario.json'
 
 # Cargar los eventos desde el archivo JSON
 def load_events() -> list:
+    """return a list of all the events"""
     if os.path.exists(FILE_PATH):
         with open(FILE_PATH, 'r') as file:
             return json.load(file)
@@ -14,12 +15,13 @@ def load_events() -> list:
 
 # Guardar los eventos en el archivo JSON
 def save_events(events) -> None:
+
     with open(FILE_PATH, 'w') as file:
         json.dump(events, file, indent=4)
 
 # Agregar un evento al calendario
 def add_events(name: str=None, date: str=None, hour="00:00") -> str:
-    
+    """adds a avent to the events list"""
     if not name:
         name = input("Nombre del evento: ")
         date_str = input("Fecha del evento (YYYY-MM-DD): ")
@@ -62,18 +64,20 @@ def add_events(name: str=None, date: str=None, hour="00:00") -> str:
 
 # Listar todos los eventos
 def show_event() -> str:
+    """returns all the events saved"""
     eventos = load_events()
     if not eventos:
-        print("No hay eventos programados.\n")
-        #print("---+---+---+---+---+--- \n \n")
+        return "No hay eventos programados.\n"
     else:
-        print("Eventos programados:")
+        resultado = "Eventos programados:\n"
         for i, evento in enumerate(eventos, start=1):
-            print(f"{i}. {evento['nombre']} - Fecha: {evento['fecha']} Hora: {evento['hora']}")
-            return f"{i}. {evento['nombre']}. Fecha: {evento['fecha']}"
+            resultado += f"{i}. {evento['nombre']} - Fecha: {evento['fecha']} Hora: {evento['hora']}.\n"
+        return resultado
+
 
 # Eliminar un evento
 def delete_event(num_evento: int=None) -> None:
+    """deletes a saved event"""
     show_event()
     eventos = load_events()
     if eventos:
@@ -86,7 +90,7 @@ def delete_event(num_evento: int=None) -> None:
             except (IndexError, ValueError):
                 print("Número de evento inválido.")
         evento = eventos.pop(num_evento - 1)
-        save_events(eventos)
+        save_events(evento)
 
 # Archivar eventos pasados
 def archivar_eventos():
