@@ -1,12 +1,12 @@
 #rutas de entornos
 
 venv/*
-__pycache__/*
-build/*
+**/__pycache__
+**/build/
 
 
 #rutas de ejecutables
-dist/alfa0.01/_internal/*
+**/_internal/
 
 #archivos de configuración
 *.spec 
