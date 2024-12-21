@@ -1,0 +1,43 @@
+name: Create Release and ZIP
+
+on:
+  push:
+    tags:
+      - 'v*' # Este flujo se ejecutará cuando se cree un tag que comience con "v"
+
+jobs:
+  create-release:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout del código
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Extraer la versión del tag (sin la "v")
+      - name: Extract version
+        run: echo "VERSION=${GITHUB_REF##*/}" | sed 's/^v//' >> $GITHUB_ENV
+
+      # Crear un archivo ZIP con el contenido del repositorio
+      - name: Create ZIP
+        run: |
+          zip -r "${VERSION}.zip" . # Crea el archivo con el nombre de la versión
+
+      # Crear una Release en GitHub
+      - name: Create GitHub Release
+        id: create_release
+        uses: actions/create-release@v1
+        with:
+          tag_name: ${{ github.ref_name }}
+          release_name: Release ${{ github.ref_name }}
+          draft: false
+          prerelease: false
+
+      # Subir el archivo ZIP a la release
+      - name: Upload Release Asset
+        uses: actions/upload-release-asset@v1
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./${{ env.VERSION }}.zip
+          asset_name: ${{ env.VERSION }}.zip
+          asset_content_type: application/zip
