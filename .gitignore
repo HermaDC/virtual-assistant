@@ -1,17 +1,17 @@
 #rutas de entornos
-
 venv/*
 **/__pycache__
 **/build/
-
 
 #rutas de ejecutables
 **/_internal/
 
 #archivos de configuración
 *.spec 
-prueba.py
-calendario.json
+.gitignore
+#archivos de prueba
+prueba*.py
 
 #archivos sensibles
+calendario.json
 *.db

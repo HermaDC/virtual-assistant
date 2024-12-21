@@ -1,8 +1,11 @@
-import directory
+import time; import os
+import threading
+
+from PIL import Image
+from pystray import Icon, Menu, MenuItem
+import costume_lib.directory as directory
 import pyttsx3
 import speech_recognition as sr
-import time
-import os
 
 # Configure voice synthesis
 engine = pyttsx3.init()
@@ -13,6 +16,17 @@ months = {
     "may": "05", "june": "06", "july": "07", "august": "08",
     "september": "09", "october": "10", "november": "11", "december": "12"
 }
+def exit(icon, item):
+    """Close the app"""
+    print("Exiting...")
+    icon.stop()
+    time.sleep(0.25)
+    os._exit(0)
+
+def setup_tray_icon():
+    global tray_icon
+    tray_icon = Icon("Barpsy Assistant", image, menu=Menu(MenuItem("Exit", exit)))
+    tray_icon.run()
 
 """Listening and speaking functions"""
 def talk(text: str) -> None:
@@ -142,4 +156,8 @@ def activate_assistant() -> None:
             time.sleep(1)
 
 if __name__ == "__main__":
+    image = Image.open("Icons/microphone_64x64.png")
+    tray_thread = threading.Thread(target=setup_tray_icon, daemon=True)
+    tray_thread.start()
+
     activate_assistant()

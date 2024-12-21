@@ -1,5 +1,5 @@
-import agenda
-import calendario
+import costume_lib.agenda as agenda
+import costume_lib.calendario as calendario
 import os.path
 import pywhatkit
 
