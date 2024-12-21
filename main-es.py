@@ -1,4 +1,4 @@
-import directorio
+import directory
 import pyttsx3
 import speech_recognition as sr
 import time
@@ -52,14 +52,14 @@ def run_assistant() -> None:
                         contact = listen()
                         talk("¿Qué mensaje le quieres enviar?")
                         mensage = listen()
-                        talk(directorio.send_whatsapp_message(contact, mensage))
+                        talk(directory.send_whatsapp_message(contact, mensage))
                     #notas
                     elif ('crear' in comand and 'nota' in comand) or "crea una nota" in comand:
                         talk("¿Qué quieres que escriba en la nota?")
                         content = listen()
-                        talk(directorio.create_note(content))
+                        talk(directory.create_note(content))
                     elif ('leer' in comand and 'nota' in comand) or "lee las notas" in comand:
-                        talk(directorio.read_notes())
+                        talk(directory.read_notes())
                     #agenda
                     elif ('crear' in comand and 'contacto' in comand) or "crea un contacto" in comand:
                         talk("Diga nombre de la persona")
@@ -68,14 +68,14 @@ def run_assistant() -> None:
                         name = listen()
                         talk("diga email")
                         email = listen()
-                        talk(directorio.create_contact(nom, name, email))
+                        talk(directory.create_contact(nom, name, email))
                     elif ('borrar' in comand and 'contacto' in comand) or "borra un contacto" in comand:
                         talk("¿Que contacto quieres borrar?")
                         name = listen()
-                        directorio.delete_contact(name)
+                        directory.delete_contact(name)
                     #calendario
                     elif ('leer' in comand and 'calendario' in comand) or "lee el calendario" in comand:
-                        talk(directorio.show_calendar())
+                        talk(directory.show_calendar())
                     elif ('crear' in comand and 'calendario' in comand) or "crea un evento" in comand:  
                         talk("estás creando un evento")
                         talk("Indica nombre del evento.")
@@ -84,16 +84,16 @@ def run_assistant() -> None:
                         date = listen()
                         talk("Di hora del evento.")
                         hour = listen()
-                        talk(directorio.create_calendar(name, date, hour))
+                        talk(directory.create_calendar(name, date, hour))
                     # Internet y youtube  
                     elif 'youtube' in comand or 'video' in comand:
                         talk("¿Qué video te gustaría ver en YouTube?")
                         search = listen()
-                        talk(directorio.play_youtube(search))
+                        talk(directory.play_youtube(search))
                     elif ('buscar' in comand and 'google') or 'busca' in comand:
                         talk("¿Qué te gustaría buscar en Google?")
                         search = listen()
-                        talk(directorio.search_google(search))
+                        talk(directory.search_google(search))
                     # Otras funciones
                     elif "abre" in comand:
                         talk("¿qué aplicación abro?")
