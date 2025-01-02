@@ -4,11 +4,13 @@ venv/*
 **/build/
 
 #rutas de ejecutables
-**/_internal/
+**/output/
 
 #archivos de configuración
-*.spec 
 .gitignore
+setup.py
+zipall.py
+config.json
 #archivos de prueba
 prueba*.py
 

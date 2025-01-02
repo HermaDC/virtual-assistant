@@ -2,7 +2,7 @@
 
 ## About
 
-This is a very limiited user assistant. It can sent whatsapp message, crete notes and much more.
+This is a very limited user assistant. It can sent whatsapp message, crete notes and much more.
 
 ## Installation
 ### Windows

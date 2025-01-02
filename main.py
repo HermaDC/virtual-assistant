@@ -1,4 +1,6 @@
-import time; import os
+import os
+import sys
+import time
 import threading
 
 from PIL import Image
@@ -9,6 +11,19 @@ import speech_recognition as sr
 
 # Configure voice synthesis
 engine = pyttsx3.init()
+
+# Determinar la base del directorio dependiendo del entorno
+if getattr(sys, 'frozen', False):  # Si está empaquetado con cx_Freeze
+    BASE_DIR = os.path.dirname(sys.executable)
+else:
+    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+# Construir la ruta al icono
+icon_path = os.path.join(BASE_DIR, "Icons", "microphone_64x64.png")
+
+# Verificar si el archivo existe
+if not os.path.exists(icon_path):
+    print(f"Error: El archivo no existe en {icon_path}")
 
 # Constants and initializer variables
 months = {
@@ -156,8 +171,8 @@ def activate_assistant() -> None:
             time.sleep(1)
 
 if __name__ == "__main__":
-    image = Image.open("Icons/microphone_64x64.png")
+    icon_path = os.path.join(BASE_DIR, "Icons", "microphone_64x64.png")
+    image = Image.open(icon_path)
     tray_thread = threading.Thread(target=setup_tray_icon, daemon=True)
     tray_thread.start()
-
     activate_assistant()

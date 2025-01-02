@@ -2,8 +2,10 @@ from datetime import datetime
 import json
 import os
 
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
 # Ruta del archivo JSON donde se almacenarán los eventos
-FILE_PATH = 'calendario.json'
+FILE_PATH = os.path.join(BASE_DIR, 'calendario.json')
 
 # Cargar los eventos desde el archivo JSON
 def load_events() -> list:

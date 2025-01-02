@@ -1,7 +1,11 @@
+import os
 import sqlite3
 
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+db_path = os.path.join(BASE_DIR, 'agenda.db')
 # Conectar a la base de datos (se crea automáticamente si no existe)
-conn = sqlite3.connect('agenda_contactos.db')
+conn = sqlite3.connect(db_path)
 cursor = conn.cursor()
 
 # Crear la tabla de contactos si no existe
