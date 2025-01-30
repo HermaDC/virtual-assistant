@@ -11,6 +11,7 @@ venv/*
 setup.py
 zipall.py
 config.json
+setup-config.json
 #archivos de prueba
 prueba*.py
 

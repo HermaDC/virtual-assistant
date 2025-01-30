@@ -2,13 +2,26 @@ import costume_lib.agenda as agenda
 import costume_lib.calendario as calendario
 import os.path
 import pywhatkit
+import requests
 
 meses = {
     "enero": "01", "febrero": "02", "marzo": "03", "abril": "04", "mayo": "05", "junio": "06",
     "julio": "07", "agosto": "08","septiembre": "09", "octubre": "10", "noviembre": "11", "diciembre": "12"
 }
-
-
+WEATHER_DICT = {
+        0: "Soleado",
+        1: "Mayormente despejado",
+        2: "Parcialmente nublado",
+        3: "Nublado",
+        45: "Neblina ligera",
+        48: "Neblina densa",
+        51: "Lluvia ligera",
+        61: "Lluvia moderada",
+        71: "Nieve ligera",
+        80: "Chubascos ligeros",
+        95: "Tormenta",
+        96: "Tormenta severa"
+    }
 
 # Enviar mensaje de WhatsApp
 def send_whatsapp_message(contact: str, mensage: str) -> str:
@@ -38,6 +51,37 @@ def search_google(search:str="") -> str:
 def play_youtube(search:str="") -> str:
     pywhatkit.playonyt(search)
     return(f"Reproduciendo {search} en YouTube")
+def check_weather():
+    try:
+        response = requests.get("ipinfo.io/json")
+        response.raise_for_status()
+        data = response.json()
+        ciudad = data.get("city", "Desconocida")
+        region = data.get("region", "Desconocida")
+        pais = data.get("country", "Desconocido")
+        coordenadas = data.get("loc", "0,0").split(",")
+        latitud, longitud = map(float, coordenadas)
+
+        print(f"Ubicación detectada: {ciudad}, {region}, {pais}")
+        print(f"Coordenadas: Latitud {latitud}, Longitud {longitud}")
+    except requests.RequestException as e:
+        print("Error al obtener la ubicación:", e)
+        return None, None
+   
+    if latitud and longitud:
+        try:
+            response = requests.get("https://api.open-meteo.com/v1/forecast", 
+                                    params={"latitude": latitud, "longitude": longitud,"current_weather": True})
+            response.raise_for_status()
+            data = response.json()
+            current_weather = data.get("current_weather", {})
+            temperature = current_weather.get("temperature", "No disponible")
+            weather_code = current_weather.get("weathercode", -1)
+
+            return WEATHER_DICT.get(weather_code, "Condición desconocida"), temperature, ciudad
+        except requests.RequestException as e:
+            return("Error al consultar el clima:", e)
+
 
 def create_note(content: str="") -> str:
     if content:
@@ -78,7 +122,6 @@ def create_calendar(name: str="", date: str="", hora:str="") -> str:
         print(format_date)
     except ValueError:
         return("error en la fecha")
-        return
     print(name, date, hora, format_date)
     a = calendario.add_events(name, format_date, hora)
     if not a:

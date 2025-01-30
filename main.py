@@ -1,13 +1,16 @@
+import json
 import os
 import sys
 import time
 import threading
 
-from PIL import Image
+import PIL
 from pystray import Icon, Menu, MenuItem
 import costume_lib.directory as directory
 import pyttsx3
 import speech_recognition as sr
+from tkinter import Label, Entry, ttk, Button, Tk, StringVar
+from tkinter.ttk import Combobox
 
 # Configure voice synthesis
 engine = pyttsx3.init()
@@ -18,19 +21,70 @@ if getattr(sys, 'frozen', False):  # Si está empaquetado con cx_Freeze
 else:
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
-# Construir la ruta al icono
-icon_path = os.path.join(BASE_DIR, "Icons", "microphone_64x64.png")
-
-# Verificar si el archivo existe
-if not os.path.exists(icon_path):
-    print(f"Error: El archivo no existe en {icon_path}")
-
 # Constants and initializer variables
 months = {
     "january": "01", "february": "02", "march": "03", "april": "04",
     "may": "05", "june": "06", "july": "07", "august": "08",
     "september": "09", "october": "10", "november": "11", "december": "12"
 }
+def save_config(key: tuple, value: tuple):
+    global WEATHER_KEY, LENGUAGE
+    with open(os.path.join(BASE_DIR, "config.json"), "w") as f:
+        config = {i: x for i, x in zip(key, value)}
+        json.dump(config, f)
+    WEATHER_KEY = config.get("weather-key", None)
+    LENGUAGE = config.get("language", "En-U")
+
+def load_config():
+    """load the configuration from the config.json file if exists, 
+    else creates a welcome window to set the configuration"""
+    if os.path.exists(os.path.join(BASE_DIR, "config.json")):
+        config = json.load(open(os.path.join(BASE_DIR, "config.json")))
+        WEATHER_KEY = config.get("weater-key", None)
+    else:
+        root = Tk()
+        root.title("Initial configuration")
+
+        # Título de la ventana
+        Label(root, text="Welcome to the App", font=("Arial", 14)).grid(row=0, column=0, columnspan=2, pady=10)
+
+        # Selector de idioma
+        Label(root, text="Select the lenguage:").grid(row=1, column=0, padx=10, pady=5)
+        idioma_var = StringVar(value="Español")  # Valor por defecto
+        idiomas = ["Español", "English"]
+        idioma_combo = Combobox(root, textvariable=idioma_var, values=idiomas)
+        idioma_combo.grid(row=1, column=1, padx=10, pady=5)
+
+        # Entrada para la clave de API
+        Label(root, text="weather API key:").grid(row=2, column=0, padx=10, pady=5)
+        api_entry = Entry(root, show="*", width=30)
+        api_entry.grid(row=2, column=1, padx=10, pady=5)
+        idioma = idioma_var.get()
+        if idioma in idiomas:
+            idioma = "En-us" if idioma == "English" else "Es-es"
+
+        # Botón para guardar la configuración
+        guardar_btn = Button(root, text="Save configuration",
+                              command=lambda:[save_config(("weather-key", "language"), (api_entry.get(), idioma) ), root.destroy()])
+        guardar_btn.grid(row=3, column=0, columnspan=2, pady=20)
+
+        # Ejecutar la ventana
+        root.mainloop()
+
+def config(icon, item):
+    root = Tk()
+    root.title("Barpsy Assistant Configuration")
+    root.geometry("400x200")
+    weather_label = Label(root, text="Introduce the weather API key").grid(row=0, column=0) 
+
+    weather_entry = Entry(root, textvariable="hola")
+    weather_entry.grid(row=0, column=1)
+    print(weather_entry)
+    cancel_button = Button(root, text="Cnacel", bg="red", command=root.destroy).grid(row=1, column=0)
+    submit_button = Button(root, text="Save", bg="green", 
+                            command=lambda: [save_config("weather-key", weather_entry.get()), root.destroy]).grid(row=1, column=1)
+    root.mainloop()
+
 def exit(icon, item):
     """Close the app"""
     print("Exiting...")
@@ -40,7 +94,7 @@ def exit(icon, item):
 
 def setup_tray_icon():
     global tray_icon
-    tray_icon = Icon("Barpsy Assistant", image, menu=Menu(MenuItem("Exit", exit)))
+    tray_icon = Icon("Barpsy Assistant", image, menu=Menu(MenuItem("Exit", exit), MenuItem("Config", config)))
     tray_icon.run()
 
 """Listening and speaking functions"""
@@ -123,6 +177,9 @@ def run_assistant() -> None:
                 talk("What would you like to search for on Google?")
                 search = listen()
                 talk(directory.search_google(search))
+            #weather
+            elif 'weather' or 'tell me de weather' in command:
+                talk(directory.check_weather())
             # Other functions
             elif "open" in command:
                 talk("Which application should I open?")
@@ -130,7 +187,7 @@ def run_assistant() -> None:
                 print(instruction)
                 os.system(instruction) if instruction else None
             elif 'thanks' in command:
-                talk("Switching to standby mode.")
+                talk("yourwelcome. Switching to standby mode.")
                 activate_assistant()
                 break
             elif 'goodbye' in command or 'exit' in command:
@@ -171,8 +228,15 @@ def activate_assistant() -> None:
             time.sleep(1)
 
 if __name__ == "__main__":
+    # Construir la ruta al icono
     icon_path = os.path.join(BASE_DIR, "Icons", "microphone_64x64.png")
-    image = Image.open(icon_path)
+
+# Verificar si el archivo existe
+    if not os.path.exists(icon_path):
+        raise FileNotFoundError(f"Icon file not found: {icon_path}")
+    icon_path = os.path.join(BASE_DIR, "Icons", "microphone_64x64.png")
+    image = PIL.Image.open(icon_path)
+    load_config()
     tray_thread = threading.Thread(target=setup_tray_icon, daemon=True)
     tray_thread.start()
     activate_assistant()
