@@ -175,7 +175,7 @@ msgid "{count} events archived."
 msgstr "{count} eventos agendados"
 
 msgid "Exiting the calendar."
-msgstr "Sliendo del calendario"
+msgstr "Saliendo del calendario"
 
 msgid "Invalid option. Please try again."
 msgstr ""
@@ -188,9 +188,6 @@ msgstr "Codigo no valido"
 
 msgid "Exiting..."
 msgstr "Saliendo..."
-
-msgid "I'm listening, how can I help you?"
-msgstr "Estoy escuchando, ¿en qué puedo ayudarte?"
 
 msgid "send a message"
 msgstr "enviar un mensaje"
@@ -242,54 +239,6 @@ msgstr "adiós"
 
 msgid "exit"
 msgstr "salir"
-
-msgid "Who do you want to send the message to?"
-msgstr "¿A quién quieres enviar el mensaje?"
-
-msgid "What message do you want to send?"
-msgstr "¿Qué mensaje quieres enviar?"
-
-msgid "What do you want me to write in the note?"
-msgstr "¿Qué quieres que escriba en la nota?"
-
-msgid "Say the person's name."
-msgstr "Di el nombre de la persona."
-
-msgid "Say the phone number with the country code."
-msgstr "Di el número de teléfono con el código del país."
-
-msgid "Say the email address."
-msgstr "Di la dirección de correo electrónico."
-
-msgid "Which contact do you want to delete?"
-msgstr "¿Qué contacto deseas eliminar?"
-
-msgid "You are creating an event."
-msgstr "Estás creando un evento."
-
-msgid "Specify the name of the event."
-msgstr "Especifica el nombre del evento."
-
-msgid "State the event date."
-msgstr "Indica la fecha del evento."
-
-msgid "State the event time."
-msgstr "Indica la hora del evento."
-
-msgid "What video would you like to watch on YouTube?"
-msgstr "¿Qué video te gustaría ver en YouTube?"
-
-msgid "What would you like to search for on Google?"
-msgstr "¿Qué te gustaría buscar en Google?"
-
-msgid "Which application should I open?"
-msgstr "¿Qué aplicación debo abrir?"
-
-msgid "You're welcome. Switching to standby mode."
-msgstr "De nada. Cambiando al modo de espera."
-
-msgid "Goodbye, see you soon!"
-msgstr "¡Adiós, hasta pronto!"
 
 msgid "I don't understand that command. Can you repeat it?"
 msgstr "No entiendo ese comando. ¿Puedes repetirlo?"

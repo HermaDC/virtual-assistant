@@ -189,9 +189,6 @@ msgstr ""
 msgid "Exiting..."
 msgstr ""
 
-msgid "I'm listening, how can I help you?"
-msgstr ""
-
 msgid "send a message"
 msgstr ""
 
@@ -241,54 +238,6 @@ msgid "goodbye"
 msgstr ""
 
 msgid "exit"
-msgstr ""
-
-msgid "Who do you want to send the message to?"
-msgstr ""
-
-msgid "What message do you want to send?"
-msgstr ""
-
-msgid "What do you want me to write in the note?"
-msgstr ""
-
-msgid "Say the person's name."
-msgstr ""
-
-msgid "Say the phone number with the country code."
-msgstr ""
-
-msgid "Say the email address."
-msgstr ""
-
-msgid "Which contact do you want to delete?"
-msgstr ""
-
-msgid "You are creating an event."
-msgstr ""
-
-msgid "Specify the name of the event."
-msgstr ""
-
-msgid "State the event date."
-msgstr ""
-
-msgid "State the event time."
-msgstr ""
-
-msgid "What video would you like to watch on YouTube?"
-msgstr ""
-
-msgid "What would you like to search for on Google?"
-msgstr ""
-
-msgid "Which application should I open?"
-msgstr ""
-
-msgid "You're welcome. Switching to standby mode."
-msgstr ""
-
-msgid "Goodbye, see you soon!"
 msgstr ""
 
 msgid "I don't understand that command. Can you repeat it?"
