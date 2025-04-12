@@ -22,7 +22,7 @@ def save_events(events) -> None:
         json.dump(events, file, indent=4)
 
 # Agregar un evento al calendario
-def add_events(name: str=None, date: str=None, hour="00:00") -> str:
+def add_events(name: str="", date: str="", hour="00:00") -> str|None:
     """adds a avent to the events list"""
     if not name:
         name = input("Nombre del evento: ")
@@ -33,7 +33,7 @@ def add_events(name: str=None, date: str=None, hour="00:00") -> str:
         try:
             date = datetime.strptime(f"{date_str} {hour_str}", '%Y-%m-%d %H:%M')
         except ValueError:
-            print("Formato de fecha u hora inválido. \n")
+            print("Invalid date or time format.\n")
             return
         
         eventos = load_events()
@@ -48,7 +48,7 @@ def add_events(name: str=None, date: str=None, hour="00:00") -> str:
     try:
         fecha = datetime.strptime(f"{date} {hour}", '%Y-%m-%d %H:%M')   
     except ValueError:
-        print("no vale")
+        print("Invalid value.")  # Updated to English
         return
 
     eventos = load_events()
@@ -61,15 +61,15 @@ def add_events(name: str=None, date: str=None, hour="00:00") -> str:
 
          
     save_events(eventos)
-    print(f"Evento '{name}' agregado con éxito. \n \n")
-    return f"Evento '{name}' agregado con éxito."
+    print(f"Event '{name}' added successfully.\n\n")  # Updated to English
+    return f"Event '{name}' added successfully."
 
 # Listar todos los eventos
 def show_event() -> str:
     """returns all the events saved"""
     eventos = load_events()
     if not eventos:
-        return "No hay eventos programados.\n"
+        return "No events scheduled.\n"  # Updated to English
     else:
         resultado = "Eventos programados:\n"
         for i, evento in enumerate(eventos, start=1):
@@ -78,7 +78,7 @@ def show_event() -> str:
 
 
 # Eliminar un evento
-def delete_event(num_evento: int=None) -> None:
+def delete_event(num_evento: int=0) -> None:
     """deletes a saved event"""
     show_event()
     eventos = load_events()
@@ -88,9 +88,9 @@ def delete_event(num_evento: int=None) -> None:
                 num_evento = int(input("Número del evento a eliminar: "))
                 evento = eventos.pop(num_evento - 1)
                 save_events(eventos)
-                print(f"Evento '{evento['nombre']}' eliminado con éxito.")
+                print(f"Event '{evento['nombre']}' deleted successfully.")  # Updated to English
             except (IndexError, ValueError):
-                print("Número de evento inválido.")
+                print("Invalid event number.")  # Updated to English
         evento = eventos.pop(num_evento - 1)
         save_events(evento)
 
@@ -113,7 +113,7 @@ def archivar_eventos():
     with open('eventos_archivados.json', 'w') as archivo:
         json.dump(eventos_archivados, archivo, indent=4)
 
-    print(f"{len(eventos_archivados)} eventos archivados.")
+    print(f"{len(eventos_archivados)} events archived.")  # Updated to English
 
 # Menú principal
 def menu() -> None:
@@ -135,10 +135,10 @@ def menu() -> None:
         elif opcion == '4':
             archivar_eventos()
         elif opcion == '5':
-            print("Saliendo del calendario.")
+            print("Exiting the calendar.")  # Updated to English
             break
         else:
-            print("Opción inválida. Inténtalo de nuevo.")
+            print("Invalid option. Please try again.")  # Updated to English
 
 # Ejecutar el menú principal
 if __name__ == "__main__":
