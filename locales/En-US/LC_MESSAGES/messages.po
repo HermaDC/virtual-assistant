@@ -1,0 +1,295 @@
+msgid ""
+msgstr ""
+"Language: En-US\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+
+msgid "I'm listening, how can I help you?"
+msgstr ""
+
+msgid "Who do you want to send the message to?"
+msgstr ""
+
+msgid "What message do you want to send?"
+msgstr ""
+
+msgid "What do you want me to write in the note?"
+msgstr ""
+
+msgid "Say the person's name."
+msgstr ""
+
+msgid "Say the phone number with the country code."
+msgstr ""
+
+msgid "Say the email address."
+msgstr ""
+
+msgid "Which contact do you want to delete?"
+msgstr ""
+
+msgid "You are creating an event."
+msgstr ""
+
+msgid "Specify the name of the event."
+msgstr ""
+
+msgid "State the event date."
+msgstr ""
+
+msgid "State the event time."
+msgstr ""
+
+msgid "What video would you like to watch on YouTube?"
+msgstr ""
+
+msgid "What would you like to search for on Google?"
+msgstr ""
+
+msgid "Which application should I open?"
+msgstr ""
+
+msgid "You're welcome. Switching to standby mode."
+msgstr ""
+
+msgid "Goodbye, see you soon!"
+msgstr ""
+
+msgid "Assistant ready. Say 'Hey Barpsy' to activate it."
+msgstr ""
+
+msgid "Hello, Barpsy activated."
+msgstr ""
+
+msgid "Error connecting to the voice recognition service."
+msgstr ""
+
+msgid "Please repeat, I didn't understand that."
+msgstr ""
+
+msgid "Message sent to: {contact}, message: {mensage}"
+msgstr ""
+
+msgid "Not a mobile phone number"
+msgstr ""
+
+msgid "Person not found"
+msgstr ""
+
+msgid "Note saved successfully"
+msgstr ""
+
+msgid "No content to save"
+msgstr ""
+
+msgid "These are your notes: {contenido}"
+msgstr ""
+
+msgid "No notes found"
+msgstr ""
+
+msgid "Contact {name} added."
+msgstr ""
+
+msgid "Invalid number: {teleph}"
+msgstr ""
+
+msgid "searching in calendar"
+msgstr ""
+
+msgid "Error in the date format"
+msgstr ""
+
+msgid "An error occurred"
+msgstr ""
+
+msgid "Playing {search} in YouTube"
+msgstr ""
+
+msgid "searching {search} in google"
+msgstr ""
+
+msgid "Sunny"
+msgstr ""
+
+msgid "Mostly clear"
+msgstr ""
+
+msgid "Partly cloudy"
+msgstr ""
+
+msgid "Cloudy"
+msgstr ""
+
+msgid "Light fog"
+msgstr ""
+
+msgid "Dense fog"
+msgstr ""
+
+msgid "Light rain"
+msgstr ""
+
+msgid "Moderate rain"
+msgstr ""
+
+msgid "Light snow"
+msgstr ""
+
+msgid "Light showers"
+msgstr ""
+
+msgid "Thunderstorm"
+msgstr ""
+
+msgid "Severe thunderstorm"
+msgstr ""
+
+msgid "Invalid number. It must start with +34 {teleph}"
+msgstr ""
+
+msgid "Name: {nombre}\nPhone: {numero}"
+msgstr ""
+
+msgid "{nom} deleted."
+msgstr ""
+
+msgid "Invalid date or time format.\n"
+msgstr ""
+
+msgid "Invalid value."
+msgstr ""
+
+msgid "Event '{name}' added successfully.\n\n"
+msgstr ""
+
+msgid "No events scheduled.\n"
+msgstr ""
+
+msgid "Event '{evento_nombre}' deleted successfully."
+msgstr ""
+
+msgid "Invalid event number."
+msgstr ""
+
+msgid "{count} events archived."
+msgstr ""
+
+msgid "Exiting the calendar."
+msgstr ""
+
+msgid "Invalid option. Please try again."
+msgstr ""
+
+msgid "Error while getting the location"
+msgstr ""
+
+msgid "Unknown code"
+msgstr ""
+
+msgid "Exiting..."
+msgstr ""
+
+msgid "I'm listening, how can I help you?"
+msgstr ""
+
+msgid "send a message"
+msgstr ""
+
+msgid "create a note"
+msgstr ""
+
+msgid "read the notes"
+msgstr ""
+
+msgid "create a contact"
+msgstr ""
+
+msgid "delete a contact"
+msgstr ""
+
+msgid "read the calendar"
+msgstr ""
+
+msgid "create an event"
+msgstr ""
+
+msgid "youtube"
+msgstr ""
+
+msgid "video"
+msgstr ""
+
+msgid "search"
+msgstr ""
+
+msgid "search google"
+msgstr ""
+
+msgid "weather"
+msgstr ""
+
+msgid "tell me the weather"
+msgstr ""
+
+msgid "open"
+msgstr ""
+
+msgid "thanks"
+msgstr ""
+
+msgid "goodbye"
+msgstr ""
+
+msgid "exit"
+msgstr ""
+
+msgid "Who do you want to send the message to?"
+msgstr ""
+
+msgid "What message do you want to send?"
+msgstr ""
+
+msgid "What do you want me to write in the note?"
+msgstr ""
+
+msgid "Say the person's name."
+msgstr ""
+
+msgid "Say the phone number with the country code."
+msgstr ""
+
+msgid "Say the email address."
+msgstr ""
+
+msgid "Which contact do you want to delete?"
+msgstr ""
+
+msgid "You are creating an event."
+msgstr ""
+
+msgid "Specify the name of the event."
+msgstr ""
+
+msgid "State the event date."
+msgstr ""
+
+msgid "State the event time."
+msgstr ""
+
+msgid "What video would you like to watch on YouTube?"
+msgstr ""
+
+msgid "What would you like to search for on Google?"
+msgstr ""
+
+msgid "Which application should I open?"
+msgstr ""
+
+msgid "You're welcome. Switching to standby mode."
+msgstr ""
+
+msgid "Goodbye, see you soon!"
+msgstr ""
+
+msgid "I don't understand that command. Can you repeat it?"
+msgstr ""

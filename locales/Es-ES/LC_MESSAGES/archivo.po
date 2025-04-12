@@ -1,0 +1,195 @@
+msgid ""
+msgstr ""
+"Language: Es-ES\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+
+msgid "An error occurred"
+msgstr "Ha ocurrido un error"
+
+msgid "Assistant ready. Say 'Hey Barpsy' to activate it."
+msgstr "Asistente listo. Di 'Hey Barpsy' para activarlo."
+
+msgid "Cloudy"
+msgstr "Nublado"
+
+msgid "Contact {name} added."
+msgstr "Contacto {name} añadido."
+
+msgid "Dense fog"
+msgstr "Niebla densa"
+
+msgid "Error connecting to the voice recognition service."
+msgstr "Error al conectar con el servicio de reconocimiento de voz."
+
+msgid "Error in the date format"
+msgstr "Error en el formato de la fecha"
+
+msgid "Error while getting the location"
+msgstr "Error al obtener la ubicacion"
+
+msgid "Event '{evento_nombre}' deleted successfully."
+msgstr "Evento '{evento_nombre}' borrado correctamente"
+
+msgid ""
+"Event '{name}' added successfully.\n"
+"\n"
+msgstr ""
+"El evento '{name}' de añadió correctamente. \n"
+" \n"
+
+msgid "Exiting the calendar."
+msgstr "Sliendo del calendario"
+
+msgid "Exiting..."
+msgstr "Saliendo..."
+
+msgid "Goodbye, see you soon!"
+msgstr "¡Adiós, hasta pronto!"
+
+msgid "Hello, Barpsy activated."
+msgstr "Hola, Barpsy activado."
+
+msgid "I'm listening, how can I help you?"
+msgstr "Estoy escuchando, ¿en qué puedo ayudarte?"
+
+msgid "Invalid date or time format.\n"
+msgstr "Formato de hora o fecha incorrecto.\n"
+
+msgid "Invalid event number."
+msgstr "Número de evento invalido"
+
+msgid "Invalid number. It must start with +34 {teleph}"
+msgstr "Número inválido. Debe comenzar con +34 {teleph}"
+
+msgid "Invalid number: {teleph}"
+msgstr "Número inválido: {teleph}"
+
+msgid "Invalid value."
+msgstr "Valor invalido"
+
+msgid "Light fog"
+msgstr "Niebla ligera"
+
+msgid "Light rain"
+msgstr "Lluvia ligera"
+
+msgid "Light showers"
+msgstr "Chubascos ligeros"
+
+msgid "Light snow"
+msgstr "Nieve ligera"
+
+msgid "Message sent to: {contact}, message: {mensage}"
+msgstr "Mensaje enviado a: {contact}, mensaje: {mensage}"
+
+msgid "Moderate rain"
+msgstr "Lluvia moderada"
+
+msgid "Mostly clear"
+msgstr "Mayormente despejado"
+
+msgid ""
+"Name: {nombre}\n"
+"Phone: {numero}"
+msgstr ""
+"Nombre: {nombre}\n"
+"Teléfono: {numero}"
+
+msgid "No content to save"
+msgstr "No hay contenido para guardar"
+
+msgid "No events scheduled.\n"
+msgstr "Ningún evento agendado. \n"
+
+msgid "No notes found"
+msgstr "No se encontraron notas"
+
+msgid "Not a mobile phone number"
+msgstr "No es un número de teléfono móvil"
+
+msgid "Note saved successfully"
+msgstr "Nota guardada exitosamente"
+
+msgid "Partly cloudy"
+msgstr "Parcialmente nublado"
+
+msgid "Person not found"
+msgstr "Persona no encontrada"
+
+msgid "Playing {search} in YouTube"
+msgstr "Reproduciendo {search} en YouTube"
+
+msgid "Please repeat, I didn't understand that."
+msgstr "Por favor repite, no entendí eso."
+
+msgid "Say the email address."
+msgstr "Di la dirección de correo electrónico."
+
+msgid "Say the person's name."
+msgstr "Di el nombre de la persona."
+
+msgid "Say the phone number with the country code."
+msgstr "Di el número de teléfono con el código de país."
+
+msgid "Severe thunderstorm"
+msgstr "Tormenta fuerte"
+
+msgid "Specify the name of the event."
+msgstr "Especifica el nombre del evento."
+
+msgid "State the event date."
+msgstr "Indica la fecha del evento."
+
+msgid "State the event time."
+msgstr "Indica la hora del evento."
+
+msgid "Sunny"
+msgstr "Soleado"
+
+msgid "These are your notes: {contenido}"
+msgstr "Estas son tus notas: {contenido}"
+
+msgid "Thunderstorm"
+msgstr "Tormenta"
+
+msgid "Unknown code"
+msgstr "Codigo no valido"
+
+msgid "What do you want me to write in the note?"
+msgstr "¿Qué quieres que escriba en la nota?"
+
+msgid "What message do you want to send?"
+msgstr "¿Qué mensaje deseas enviar?"
+
+msgid "What video would you like to watch on YouTube?"
+msgstr "¿Qué video te gustaría ver en YouTube?"
+
+msgid "What would you like to search for on Google?"
+msgstr "¿Qué te gustaría buscar en Google?"
+
+msgid "Which application should I open?"
+msgstr "¿Qué aplicación debería abrir?"
+
+msgid "Which contact do you want to delete?"
+msgstr "¿Qué contacto deseas eliminar?"
+
+msgid "Who do you want to send the message to?"
+msgstr "¿A quién quieres enviar el mensaje?"
+
+msgid "You are creating an event."
+msgstr "Estás creando un evento."
+
+msgid "You're welcome. Switching to standby mode."
+msgstr "De nada. Cambiando a modo en espera."
+
+msgid "searching in calendar"
+msgstr "buscando en el calendario"
+
+msgid "searching {search} in google"
+msgstr "buscando {search} en Google"
+
+msgid "{count} events archived."
+msgstr "{count} eventos agendados"
+
+msgid "{nom} deleted."
+msgstr "{nom} eliminado."
