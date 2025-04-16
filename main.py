@@ -2,8 +2,10 @@ import json
 import os
 import sys
 import time
+from typing import Any
 import threading
 
+import gettext
 import PIL
 from pystray import Icon, Menu, MenuItem
 import costume_lib.directory as directory
@@ -12,14 +14,34 @@ import speech_recognition as sr
 from tkinter import Label, Entry, ttk, Button, Tk, StringVar
 from tkinter.ttk import Combobox
 
+#TODO add multi lenguage babel
+
 # Configure voice synthesis
 engine = pyttsx3.init()
+DEFAULT_LANGUAGE = "En-US"
 
 # Determinar la base del directorio dependiendo del entorno
 if getattr(sys, 'frozen', False):  # Si está empaquetado con cx_Freeze
     BASE_DIR = os.path.dirname(sys.executable)
 else:
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+CONFIG_PATH = os.path.join(BASE_DIR, "config.json")
+if os.path.exists(CONFIG_PATH):
+    with open(CONFIG_PATH, "r") as f:
+        try:
+            existing_config = json.load(f)
+            lang = existing_config.get("language", DEFAULT_LANGUAGE).lower()
+        except json.JSONDecodeError:
+            lang = DEFAULT_LANGUAGE
+else:
+    lang = DEFAULT_LANGUAGE
+
+# NUEVO: preparar gettext con idioma correcto
+locales_dir = os.path.join(BASE_DIR, "locales")
+translation = gettext.translation('messages', localedir=locales_dir, languages=[lang], fallback=True)
+translation.install()
+_ = translation.gettext
 
 # Constants and initializer variables
 months = {
@@ -28,19 +50,28 @@ months = {
     "september": "09", "october": "10", "november": "11", "december": "12"
 }
 def save_config(key: tuple, value: tuple):
-    global WEATHER_KEY, LENGUAGE
+    global WEATHER_KEY, LANGUAGE
     with open(os.path.join(BASE_DIR, "config.json"), "w") as f:
         config = {i: x for i, x in zip(key, value)}
         json.dump(config, f)
     WEATHER_KEY = config.get("weather-key", None)
-    LENGUAGE = config.get("language", "En-U")
+    LANGUAGE = config.get("language", "En-US")
+
+def set_language(lang_code: str):
+    global _, translation, LANGUAGE
+    LANGUAGE = lang_code
+    translation = gettext.translation('messages', localedir=locales_dir, languages=[lang_code], fallback=True)
+    translation.install()
+    _ = translation.gettext
 
 def load_config():
     """load the configuration from the config.json file if exists, 
     else creates a welcome window to set the configuration"""
+    global WEATHER_KEY, LANGUAGE
     if os.path.exists(os.path.join(BASE_DIR, "config.json")):
         config = json.load(open(os.path.join(BASE_DIR, "config.json")))
-        WEATHER_KEY = config.get("weater-key", None)
+        WEATHER_KEY = config.get("weather-key", None)  # Fixed typo here
+        LANGUAGE = config.get("language", "en")
     else:
         root = Tk()
         root.title("Initial configuration")
@@ -49,7 +80,7 @@ def load_config():
         Label(root, text="Welcome to the App", font=("Arial", 14)).grid(row=0, column=0, columnspan=2, pady=10)
 
         # Selector de idioma
-        Label(root, text="Select the lenguage:").grid(row=1, column=0, padx=10, pady=5)
+        Label(root, text="Select the language:").grid(row=1, column=0, padx=10, pady=5)
         idioma_var = StringVar(value="Español")  # Valor por defecto
         idiomas = ["Español", "English"]
         idioma_combo = Combobox(root, textvariable=idioma_var, values=idiomas)
@@ -61,11 +92,11 @@ def load_config():
         api_entry.grid(row=2, column=1, padx=10, pady=5)
         idioma = idioma_var.get()
         if idioma in idiomas:
-            idioma = "En-us" if idioma == "English" else "Es-es"
+            idioma = "En-US" if idioma == "English" else "Es-ES"
 
         # Botón para guardar la configuración
         guardar_btn = Button(root, text="Save configuration",
-                              command=lambda:[save_config(("weather-key", "language"), (api_entry.get(), idioma) ), root.destroy()])
+                              command=lambda:[save_config(("weather-key", "language"), (api_entry.get(), idioma) ), set_language(idioma), root.destroy()])
         guardar_btn.grid(row=3, column=0, columnspan=2, pady=20)
 
         # Ejecutar la ventana
@@ -73,16 +104,33 @@ def load_config():
 
 def config(icon, item):
     root = Tk()
-    root.title("Barpsy Assistant Configuration")
-    root.geometry("400x200")
-    weather_label = Label(root, text="Introduce the weather API key").grid(row=0, column=0) 
+    root.title("Initial configuration")
 
-    weather_entry = Entry(root, textvariable="hola")
-    weather_entry.grid(row=0, column=1)
-    print(weather_entry)
-    cancel_button = Button(root, text="Cnacel", bg="red", command=root.destroy).grid(row=1, column=0)
-    submit_button = Button(root, text="Save", bg="green", 
-                            command=lambda: [save_config("weather-key", weather_entry.get()), root.destroy]).grid(row=1, column=1)
+    # Título de la ventana
+    Label(root, text="Welcome to the App", font=("Arial", 14)).grid(row=0, column=0, columnspan=2, pady=10)
+
+    # Selector de idioma
+    Label(root, text="Select the language:").grid(row=1, column=0, padx=10, pady=5)
+    idioma_var = StringVar(value="Español")  # Valor por defecto
+    idiomas = ["Español", "English"]
+    idioma_combo = Combobox(root, textvariable=idioma_var, values=idiomas)
+    idioma_combo.grid(row=1, column=1, padx=10, pady=5)
+
+    # Entrada para la clave de API
+    Label(root, text="weather API key:").grid(row=2, column=0, padx=10, pady=5)
+    api_entry = Entry(root, show="*", width=30)
+    api_entry.grid(row=2, column=1, padx=10, pady=5)
+    idioma = idioma_var.get()
+    if idioma in idiomas:
+        idioma = "En-US" if idioma == "English" else "Es-ES"
+
+    # Botón para guardar la configuración
+    guardar_btn = Button(root, text="Save configuration",
+                          command=lambda:[save_config(("weather-key", "language"), (api_entry.get(), idioma) ),
+                                          set_language(idioma), root.destroy()])
+    guardar_btn.grid(row=3, column=0, columnspan=2, pady=20)
+
+    # Ejecutar la ventana
     root.mainloop()
 
 def exit(icon, item):
@@ -98,21 +146,22 @@ def setup_tray_icon():
     tray_icon.run()
 
 """Listening and speaking functions"""
-def talk(text: str) -> None:
+def talk(text: Any) -> None:
     """Speaks a given text"""
     if text:
-        engine.say(text)
+        translated = _(text)
+        engine.say(translated)
         engine.runAndWait()  # Ensures the message is completed before continuing
 
 # Voice recognition configuration
-def listen() -> str:
+def listen() -> str | None:
     """Listens and returns a string"""
     r = sr.Recognizer()
     with sr.Microphone() as source:
         print("Listening...")
         audio = r.listen(source)
         try:
-            command = r.recognize_google(audio, language="en-US")
+            command = r.recognize_google(audio, language=LANGUAGE)
             print(f"Command received: {command}")
             return command.lower()
         except sr.UnknownValueError:
@@ -126,76 +175,112 @@ def listen() -> str:
     These manage all operations"""
 # Main function that executes actions after activation
 def run_assistant() -> None:
-    talk("I'm listening, how can I help you?")
+    talk(_("I'm listening, how can I help you?"))
+
+    commands = {
+        "send_message": _("send a message"),
+        "create_note": _("create a note"),
+        "read_notes": _("read the notes"),
+        "create_contact": _("create a contact"),
+        "delete_contact": _("delete a contact"),
+        "read_calendar": _("read the calendar"),
+        "create_event": _("create an event"),
+        "youtube": _("youtube"),
+        "video": _("video"),
+        "search": _("search"),
+        "search_google": _("search google"),
+        "weather": _("weather"),
+        "weather_alt": _("tell me the weather"),
+        "open": _("open"),
+        "thanks": _("thanks"),
+        "goodbye": _("goodbye"),
+        "exit": _("exit")
+    }
+
     while True:
         command = listen()
         if command:
-            if 'send a message' in command:
-                talk("Who do you want to send the message to?")
+            if commands["send_message"] in command:
+                talk(_("Who do you want to send the message to?"))
                 contact = listen()
-                talk("What message do you want to send?")
+                talk(_("What message do you want to send?"))
                 message = listen()
-                talk(directory.send_whatsapp_message(contact, message))
-            # Notes
-            elif ('create' in command and 'note' in command) or "create a note" in command:
-                talk("What do you want me to write in the note?")
+                if contact and message:
+                    talk(directory.send_whatsapp_message(contact, message))
+
+            elif commands["create_note"] in command:
+                talk(_("What do you want me to write in the note?"))
                 content = listen()
-                talk(directory.create_note(content))
-            elif ('read' in command and 'note' in command) or "read the notes" in command:
+                if content:
+                    talk(directory.create_note(content))
+
+            elif commands["read_notes"] in command:
                 talk(directory.read_notes())
-            # Contacts
-            elif ('create' in command and 'contact' in command) or "create a contact" in command:
-                talk("Say the person's name.")
+
+            elif commands["create_contact"] in command:
+                talk(_("Say the person's name."))
                 name = listen()
-                talk("Say the phone number with the country code.")
+                talk(_("Say the phone number with the country code."))
                 number = listen()
-                talk("Say the email address.")
+                talk(_("Say the email address."))
                 email = listen()
-                talk(directory.create_contact(name, number, email))
-            elif ('delete' in command and 'contact' in command) or "delete a contact" in command:
-                talk("Which contact do you want to delete?")
+                if name and number and email:
+                    talk(directory.create_contact(name, number, email))
+
+            elif commands["delete_contact"] in command:
+                talk(_("Which contact do you want to delete?"))
                 name = listen()
-                directory.delete_contact(name)
-            # Calendar
-            elif ('read' in command and 'calendar' in command) or "read the calendar" in command:
+                if name:
+                    directory.delete_contact(name)
+
+            elif commands["read_calendar"] in command:
                 talk(directory.show_calendar())
-            elif ('create' in command and 'calendar' in command) or "create an event" in command:
-                talk("You are creating an event.")
-                talk("Specify the name of the event.")
+
+            elif commands["create_event"] in command:
+                talk(_("You are creating an event."))
+                talk(_("Specify the name of the event."))
                 name = listen()
-                talk("State the event date.")
+                talk(_("State the event date."))
                 date = listen()
-                talk("State the event time.")
-                time = listen()
-                talk(directory.create_calendar(name, date, time))
-            # Internet and YouTube
-            elif 'youtube' in command or 'video' in command:
-                talk("What video would you like to watch on YouTube?")
+                talk(_("State the event time."))
+                hour = listen()
+                if name and date and hour:
+                    talk(directory.create_calendar(name, date, hour))
+
+            elif commands["youtube"] in command or commands["video"] in command:
+                talk(_("What video would you like to watch on YouTube?"))
                 search = listen()
-                talk(directory.play_youtube(search))
-            elif ('search' in command and 'google') or 'search' in command:
-                talk("What would you like to search for on Google?")
+                if search:
+                    talk(directory.play_youtube(search))
+
+            elif commands["search"] in command or commands["search_google"] in command:
+                talk(_("What would you like to search for on Google?"))
                 search = listen()
-                talk(directory.search_google(search))
-            #weather
-            elif 'weather' or 'tell me de weather' in command:
+                if search:
+                    talk(directory.search_google(search))
+
+            elif commands["weather"] in command or commands["weather_alt"] in command:
                 talk(directory.check_weather())
-            # Other functions
-            elif "open" in command:
-                talk("Which application should I open?")
+
+            elif commands["open"] in command:
+                talk(_("Which application should I open?"))
                 instruction = listen()
-                print(instruction)
                 os.system(instruction) if instruction else None
-            elif 'thanks' in command:
-                talk("yourwelcome. Switching to standby mode.")
+
+            elif commands["thanks"] in command:
+                talk(_("You're welcome. Switching to standby mode."))
                 activate_assistant()
                 break
-            elif 'goodbye' in command or 'exit' in command:
-                talk("Goodbye, see you soon!")
+
+            elif commands["goodbye"] in command or commands["exit"] in command:
+                talk(_("Goodbye, see you soon!"))
                 raise SystemExit
+
             else:
-                print("I don't understand that command. Can you repeat it?")
+                print(_("I don't understand that command. Can you repeat it?"))
+
         time.sleep(1)
+
 
 # Function to activate the assistant when "Hey Barpsy" is said
 def activate_assistant() -> None:
@@ -210,9 +295,9 @@ def activate_assistant() -> None:
             print("Listening for the keyword...")
             audio = r.listen(source)
             try:
-                command = r.recognize_google(audio, language="en-US").lower()
+                command = r.recognize_google(audio, language=LANGUAGE).strip().lower()  # Normalize input
                 print(f"Keyword detected: {command}")
-                if 'hey barpsy' in command:
+                if 'hey barsi' in command:
                     talk("Hello, Barpsy activated.")
                     run_assistant()  # Calls the main function
                     break

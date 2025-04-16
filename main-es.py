@@ -111,6 +111,7 @@ def activar_asistente() -> None:
             time.sleep(1)
 
 if __name__ == "__main__":
+    DeprecationWarning("This file will be removed in alfa 0.3 due to proper translations")
     # Cargar la imagen usando una ruta relativa
     icon_path = os.path.join(BASE_DIR, "Icons", "microphone_64x64.png")
     image = Image.open(icon_path)

@@ -1,0 +1,244 @@
+msgid ""
+msgstr ""
+"Language: Es-ES\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+
+msgid "I'm listening, how can I help you?"
+msgstr "Estoy escuchando, ¿en qué puedo ayudarte?"
+
+msgid "Who do you want to send the message to?"
+msgstr "¿A quién quieres enviar el mensaje?"
+
+msgid "What message do you want to send?"
+msgstr "¿Qué mensaje deseas enviar?"
+
+msgid "What do you want me to write in the note?"
+msgstr "¿Qué quieres que escriba en la nota?"
+
+msgid "Say the person's name."
+msgstr "Di el nombre de la persona."
+
+msgid "Say the phone number with the country code."
+msgstr "Di el número de teléfono con el código de país."
+
+msgid "Say the email address."
+msgstr "Di la dirección de correo electrónico."
+
+msgid "Which contact do you want to delete?"
+msgstr "¿Qué contacto deseas eliminar?"
+
+msgid "You are creating an event."
+msgstr "Estás creando un evento."
+
+msgid "Specify the name of the event."
+msgstr "Especifica el nombre del evento."
+
+msgid "State the event date."
+msgstr "Indica la fecha del evento."
+
+msgid "State the event time."
+msgstr "Indica la hora del evento."
+
+msgid "What video would you like to watch on YouTube?"
+msgstr "¿Qué video te gustaría ver en YouTube?"
+
+msgid "What would you like to search for on Google?"
+msgstr "¿Qué te gustaría buscar en Google?"
+
+msgid "Which application should I open?"
+msgstr "¿Qué aplicación debería abrir?"
+
+msgid "You're welcome. Switching to standby mode."
+msgstr "De nada. Cambiando a modo en espera."
+
+msgid "Goodbye, see you soon!"
+msgstr "¡Adiós, hasta pronto!"
+
+msgid "Assistant ready. Say 'Hey Barpsy' to activate it."
+msgstr "Asistente listo. Di 'Hey Barpsy' para activarlo."
+
+msgid "Hello, Barpsy activated."
+msgstr "Hola, Barpsy activado."
+
+msgid "Error connecting to the voice recognition service."
+msgstr "Error al conectar con el servicio de reconocimiento de voz."
+
+msgid "Please repeat, I didn't understand that."
+msgstr "Por favor repite, no entendí eso."
+
+msgid "Message sent to: {contact}, message: {mensage}"
+msgstr "Mensaje enviado a: {contact}, mensaje: {mensage}"
+
+msgid "Not a mobile phone number"
+msgstr "No es un número de teléfono móvil"
+
+msgid "Person not found"
+msgstr "Persona no encontrada"
+
+msgid "Note saved successfully"
+msgstr "Nota guardada exitosamente"
+
+msgid "No content to save"
+msgstr "No hay contenido para guardar"
+
+msgid "These are your notes: {contenido}"
+msgstr "Estas son tus notas: {contenido}"
+
+msgid "No notes found"
+msgstr "No se encontraron notas"
+
+msgid "Contact {name} added."
+msgstr "Contacto {name} añadido."
+
+msgid "Invalid number: {teleph}"
+msgstr "Número inválido: {teleph}"
+
+msgid "searching in calendar"
+msgstr "buscando en el calendario"
+
+msgid "Error in the date format"
+msgstr "Error en el formato de la fecha"
+
+msgid "An error occurred"
+msgstr "Ha ocurrido un error"
+
+msgid "Playing {search} in YouTube"
+msgstr "Reproduciendo {search} en YouTube"
+
+msgid "searching {search} in google"
+msgstr "buscando {search} en Google"
+
+msgid "Sunny"
+msgstr "Soleado"
+
+msgid "Mostly clear"
+msgstr "Mayormente despejado"
+
+msgid "Partly cloudy"
+msgstr "Parcialmente nublado"
+
+msgid "Cloudy"
+msgstr "Nublado"
+
+msgid "Light fog"
+msgstr "Niebla ligera"
+
+msgid "Dense fog"
+msgstr "Niebla densa"
+
+msgid "Light rain"
+msgstr "Lluvia ligera"
+
+msgid "Moderate rain"
+msgstr "Lluvia moderada"
+
+msgid "Light snow"
+msgstr "Nieve ligera"
+
+msgid "Light showers"
+msgstr "Chubascos ligeros"
+
+msgid "Thunderstorm"
+msgstr "Tormenta"
+
+msgid "Severe thunderstorm"
+msgstr "Tormenta fuerte"
+
+msgid "Invalid number. It must start with +34 {teleph}"
+msgstr "Número inválido. Debe comenzar con +34 {teleph}"
+
+msgid "Name: {nombre}\nPhone: {numero}"
+msgstr "Nombre: {nombre}\nTeléfono: {numero}"
+
+msgid "{nom} deleted."
+msgstr "{nom} eliminado."
+
+msgid "Invalid date or time format.\n"
+msgstr "Formato de hora o fecha incorrecto.\n"
+
+msgid "Invalid value."
+msgstr "Valor invalido"
+
+msgid "Event '{name}' added successfully.\n\n"
+msgstr "El evento '{name}' de añadió correctamente. \n \n"
+
+msgid "No events scheduled.\n"
+msgstr "Ningún evento agendado. \n"
+
+msgid "Event '{evento_nombre}' deleted successfully."
+msgstr "Evento '{evento_nombre}' borrado correctamente"
+
+msgid "Invalid event number."
+msgstr "Número de evento invalido"
+
+msgid "{count} events archived."
+msgstr "{count} eventos agendados"
+
+msgid "Exiting the calendar."
+msgstr "Saliendo del calendario"
+
+msgid "Invalid option. Please try again."
+msgstr ""
+
+msgid "Error while getting the location"
+msgstr "Error al obtener la ubicacion"
+
+msgid "Unknown code"
+msgstr "Codigo no valido"
+
+msgid "Exiting..."
+msgstr "Saliendo..."
+
+msgid "send a message"
+msgstr "enviar un mensaje"
+
+msgid "create a note"
+msgstr "crear una nota"
+
+msgid "read the notes"
+msgstr "leer las notas"
+
+msgid "create a contact"
+msgstr "crear un contacto"
+
+msgid "delete a contact"
+msgstr "eliminar un contacto"
+
+msgid "read the calendar"
+msgstr "leer el calendario"
+
+msgid "create an event"
+msgstr "crear un evento"
+
+msgid "youtube"
+msgstr "youtube"
+
+msgid "video"
+msgstr "video"
+
+msgid "search"
+msgstr "buscar"
+
+msgid "search google"
+msgstr "buscar en google"
+
+msgid "weather"
+msgstr "clima"
+
+msgid "tell me the weather"
+msgstr "dime el clima"
+
+msgid "open"
+msgstr "abrir"
+
+msgid "thanks"
+msgstr "gracias"
+
+msgid "goodbye"
+msgstr "adiós"
+
+msgid "exit"
+msgstr "salir"
+
+msgid "I don't understand that command. Can you repeat it?"
+msgstr "No entiendo ese comando. ¿Puedes repetirlo?"

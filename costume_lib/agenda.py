@@ -19,55 +19,39 @@ CREATE TABLE IF NOT EXISTS contactos (
 ''')
 
 # Función para agregar un contacto
-def add_contact(name:str, teleph="0", email="") -> str:
+def add_contact(name: str, teleph="0", email="") -> str | None:
     """Adds a contact"""
-    #print(telefono)
-    b = teleph.split("+34")
-    try:
-        b[1] 
-        if len(b[1]) == 9:  #combrobar los caracters
-            #print("es un telefono") 
-            numero_sin = int(b[1][0]) 
-            if numero_sin == 6 or numero_sin == 7: #combrueba si es un movil
-                #print("es un movil")
-                cursor.execute('''
-                INSERT INTO contactos (nombre, telefono, email) VALUES (?, ?, ?)''', (name, teleph, email))
-                conn.commit()
-                if __name__ != "__main__":
-                    conn.close()
-                return(f'Contacto {name} agregado.')
-
-    except IndexError:
-        print(f"Numero no valido. Debe empezar con +34 {teleph}")
-        return(f"Numero no valido. Debe empezar con +34 {teleph}")
+    teleph = teleph.replace(" ", "")
+    if teleph.startswith("+34") and len(teleph) == 12 and teleph[3] in "67":
+        cursor.execute('''INSERT INTO contactos (nombre, telefono, email) VALUES (?, ?, ?)''', (name, teleph, email))
+        conn.commit()
+        return f"Contact {name} added."
+    else:
+        return f"Invalid number: {teleph}"
         
 # Función para mostrar todos los contactos
-def search_contact(filtro: str) -> str:
+def search_contact(filtro: str) -> tuple[str, int] | None:
     """Search for a contact"""
-    cursor.execute("""SELECT * FROM contactos WHERE nombre like '{}'""".format(filtro))
+    cursor.execute("SELECT * FROM contactos WHERE nombre LIKE ?", (filtro,))
     contactos = cursor.fetchall()
-    try:
-        tupla = contactos[0] #sacar datos de la base de datos
-        nombre = tupla[1]
-        numero = int(tupla[2])
-        email = tupla[3]
-
-        print(f"\nNombre: {nombre}\nTeléfono: {numero}")
+    if contactos:
+        nombre, numero, email = contactos[0][1:4]
+        print(f"\nName: {nombre}\nPhone: {numero}")
         return nombre, numero
-    except IndexError:
-        return None
+    return None
     
-def delete_contact(nom: str) -> None:
-    """deletes a contact"""
-    cursor.execute(f"""DELETE FROM contactos WHERE nombre='{nom}'""")    
+def delete_contact(name: str) -> str:
+    """Deletes a contact"""
+    cursor.execute("DELETE FROM contactos WHERE nombre = ?", (name,))
+
     conn.commit()
     if __name__ != "__main__":
-        conn.close()    
-    return f"{nom} borrado correctamente"
+        conn.close()
+    return f"{name} deleted."
 
 # Función principal
 def main() -> None:
-    """Funcion no util. Es la interfaz"""
+    """Función no util. Es la interfaz"""
     while True:
 
         try:
@@ -93,10 +77,10 @@ def main() -> None:
                 break
                 
             else:
-                print("\nOpción no válida. Inténtalo de nuevo.")
+                print("\nInvalid option. Please try again.")
         except KeyboardInterrupt:
             conn.close()
-            print("\nSaliendo...")
+            print("\nExiting...")
             break
 
     # Cerrar la conexión a la base de datos
@@ -104,4 +88,3 @@ def main() -> None:
 
 if __name__ == '__main__':
     main()
-    
