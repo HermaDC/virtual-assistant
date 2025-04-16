@@ -21,78 +21,46 @@ def save_events(events) -> None:
     with open(FILE_PATH, 'w') as file:
         json.dump(events, file, indent=4)
 
-# Agregar un evento al calendario
-def add_events(name: str="", date: str="", hour="00:00") -> str|None:
-    """adds a avent to the events list"""
-    if not name:
-        name = input("Nombre del evento: ")
-        date_str = input("Fecha del evento (YYYY-MM-DD): ")
-        hour_str = input("Hora del evento (HH:MM, 24h): ")
-        print("\n")
-        
-        try:
-            date = datetime.strptime(f"{date_str} {hour_str}", '%Y-%m-%d %H:%M')
-        except ValueError:
-            print("Invalid date or time format.\n")
-            return
-        
-        eventos = load_events()
-        eventos.append({
-            'nombre': name,
-            'fecha': date_str,
-            'hora': hour_str
-        })
-
-        return
-    print(date, hour)
+# Updated `add_events` to improve error handling and validation
+def add_events(name: str = "", date: str = "", hour: str = "00:00") -> str | None:
+    """Adds an event to the events list"""
     try:
-        fecha = datetime.strptime(f"{date} {hour}", '%Y-%m-%d %H:%M')   
+        fecha = datetime.strptime(f"{date} {hour}", '%Y-%m-%d %H:%M')
     except ValueError:
-        print("Invalid value.")  # Updated to English
-        return
+        return "Invalid date or time format."
 
     eventos = load_events()
-    print(f"nombre: {name} fecha: {str(fecha)} hora: {hour}")
     eventos.append({
-            'nombre': name,
-            'fecha': str(fecha),
-            'hora': hour
-        })
-
-         
+        'nombre': name,
+        'fecha': date,
+        'hora': hour
+    })
     save_events(eventos)
-    print(f"Event '{name}' added successfully.\n\n")  # Updated to English
     return f"Event '{name}' added successfully."
 
-# Listar todos los eventos
+# Updated `show_event` to improve formatting
 def show_event() -> str:
-    """returns all the events saved"""
+    """Returns all the events saved"""
     eventos = load_events()
     if not eventos:
-        return "No events scheduled.\n"  # Updated to English
-    else:
-        resultado = "Eventos programados:\n"
-        for i, evento in enumerate(eventos, start=1):
-            resultado += f"{i}. {evento['nombre']} - Fecha: {evento['fecha']} Hora: {evento['hora']}.\n"
-        return resultado
+        return "No events scheduled."
+    resultado = "Scheduled events:\n"
+    for i, evento in enumerate(eventos, start=1):
+        resultado += f"{i}. {evento['nombre']} - Date: {evento['fecha']} Time: {evento['hora']}.\n"
+    return resultado
 
-
-# Eliminar un evento
-def delete_event(num_evento: int=0) -> None:
-    """deletes a saved event"""
-    show_event()
+# Updated `delete_event` to improve error handling
+def delete_event(num_evento: int = 0) -> str:
+    """Deletes a saved event"""
     eventos = load_events()
-    if eventos:
-        if not num_evento:
-            try:
-                num_evento = int(input("Número del evento a eliminar: "))
-                evento = eventos.pop(num_evento - 1)
-                save_events(eventos)
-                print(f"Event '{evento['nombre']}' deleted successfully.")  # Updated to English
-            except (IndexError, ValueError):
-                print("Invalid event number.")  # Updated to English
+    if not eventos:
+        return "No events to delete."
+    try:
         evento = eventos.pop(num_evento - 1)
-        save_events(evento)
+        save_events(eventos)
+        return f"Event '{evento['nombre']}' deleted successfully."
+    except (IndexError, ValueError):
+        return "Invalid event number."
 
 # Archivar eventos pasados
 def archivar_eventos():
