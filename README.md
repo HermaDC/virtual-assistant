@@ -12,7 +12,7 @@ There are binaries in the [releases](https://github.com/HermaDC/virtual-assistan
 NOTE: Python 3.11 or higher required and pip riquired too. **Python 3.12 recomended.**
 #### 1. Clone the repository
 ```bash
-git clone https://github.com/hermadc/virtual-assistant
+git clone https://github.com/HermaDC/virtual-assistant
 cd asistente
 ```
 
@@ -24,7 +24,7 @@ cd asistente
 
 ## Usage
 * Run the file.
-* whait for the file to show ```Listo, Di hey barpsi.```
+* Wait for the file to show ```Listo, Di hey barpsi.```
 * Say "hey Barpsi"
 * Ask the comand
 ### Example
