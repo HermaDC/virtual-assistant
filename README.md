@@ -12,7 +12,7 @@ There are binaries in the [releases](https://github.com/HermaDC/virtual-assistan
 NOTE: Python 3.11 or higher required and pip riquired too. **Python 3.12 recomended.**
 #### 1. Clone the repository
 ```bash
-git clone https://github.com/hermadc/virtual-assistant
+git clone https://github.com/HermaDC/virtual-assistant
 cd asistente
 ```
 
@@ -36,10 +36,10 @@ python3 main.py
 
 ## Contribution
 
-If any bug or suggestion apears feel free to [open a issue](https://github.com/HermaDC/virtual-assistant/issues/new)
+If any bug or suggestion apears feel free to [open a issue](https://github.com/HermaDC/virtual-assistant/issues)
 
 ## License
-GPL © [Asitant](https://github.com/HermaDC/virtual-assitant)<br>
+GPL © [Asitant](https://github.com/hermadc/virtual-assitant)<br>
 MIT © [Pywahtkit](https://pypi.org/project/pywhatkit/)<br>
-BSD © [Speech Recognition](https://pypi.org/project/SpeechRecognition)<br>
-MPL © [pyttsx3](https://pypi.org/projects/pyttsx3)
+BSD © [Speach Recognition](https://pypi.org/project/SpeachRecognition)<br>
+MPL © [pyttsx3](https://pypi.org/projects/pyttsx)
