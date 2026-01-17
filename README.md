@@ -24,7 +24,7 @@ cd asistente
 
 ## Usage
 * Run the file.
-* wait for the file to show ```Listo, Di hey barpsi.```
+* Wait for the file to show ```Listo, Di hey barpsi.```
 * Say "hey Barpsi"
 * Ask the comand
 ### Example
@@ -36,10 +36,10 @@ python3 main.py
 
 ## Contribution
 
-If any bug or suggestion apears feel free to [open a issue](https://github.com/HermaDC/virtual-assistant/issues)
+If any bug or suggestion apears feel free to [open a issue](https://github.com/HermaDC/virtual-assistant/issues/new)
 
 ## License
-GPL © [Asitant](https://github.com/hermadc/virtual-assitant)<br>
+GPL © [Asitant](https://github.com/HermaDC/virtual-assitant)<br>
 MIT © [Pywahtkit](https://pypi.org/project/pywhatkit/)<br>
-BSD © [Speach Recognition](https://pypi.org/project/SpeachRecognition)<br>
-MPL © [pyttsx3](https://pypi.org/projects/pyttsx)
+BSD © [Speech Recognition](https://pypi.org/project/SpeechRecognition)<br>
+MPL © [pyttsx3](https://pypi.org/projects/pyttsx3)
