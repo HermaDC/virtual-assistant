@@ -24,7 +24,7 @@ cd asistente
 
 ## Usage
 * Run the file.
-* whait for the file to show ```Listo, Di hey barpsi.```
+* wait for the file to show ```Listo, Di hey barpsi.```
 * Say "hey Barpsi"
 * Ask the comand
 ### Example
