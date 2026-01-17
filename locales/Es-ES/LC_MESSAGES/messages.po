@@ -242,3 +242,9 @@ msgstr "salir"
 
 msgid "I don't understand that command. Can you repeat it?"
 msgstr "No entiendo ese comando. ¿Puedes repetirlo?"
+
+msgid "The weather in {city} is {weather} with a temperature of {temperature} degrees."
+msgstr "El tiempo en {city} es de {weather} y hace {temperature} grados"
+
+msgid "Invalid contact format"
+msgstr "Formato invalido"

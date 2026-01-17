@@ -4,6 +4,7 @@ import sys
 import time
 from typing import Any
 import threading
+import uuid
 
 import gettext
 import PIL
@@ -14,7 +15,18 @@ import speech_recognition as sr
 from tkinter import Label, Entry, ttk, Button, Tk, StringVar
 from tkinter.ttk import Combobox
 
-#TODO add multi lenguage babel
+#TODO ver como poner spotify issue #6
+#   idea: usar json para las listas y albumes. con webbrowser abri, pero no se puede parar
+#   idea: usar web auth 
+"""sp = spotipy.Spotify(auth_manager=SpotifyOAuth(
+    client_id='...',
+    client_secret='...',
+    redirect_uri='http://localhost:8888/callback',
+    scope='user-modify-playback-state',
+    cache_path='token.txt'
+))"""
+#TODO usar UUID para usuario y logging
+
 
 # Configure voice synthesis
 engine = pyttsx3.init()
@@ -67,11 +79,12 @@ def set_language(lang_code: str):
 def load_config():
     """load the configuration from the config.json file if exists, 
     else creates a welcome window to set the configuration"""
-    global WEATHER_KEY, LANGUAGE
+    global WEATHER_KEY, LANGUAGE, USER_UUID
     if os.path.exists(os.path.join(BASE_DIR, "config.json")):
         config = json.load(open(os.path.join(BASE_DIR, "config.json")))
         WEATHER_KEY = config.get("weather-key", None)  # Fixed typo here
         LANGUAGE = config.get("language", "en")
+        USER_UUID = config.get("session-id", None)
     else:
         root = Tk()
         root.title("Initial configuration")
@@ -96,7 +109,7 @@ def load_config():
 
         # Botón para guardar la configuración
         guardar_btn = Button(root, text="Save configuration",
-                              command=lambda:[save_config(("weather-key", "language"), (api_entry.get(), idioma) ), set_language(idioma), root.destroy()])
+                              command=lambda:[save_config(("weather-key", "language", "session-id"), (api_entry.get(), idioma, str(uuid.uuid4())) ), set_language(idioma), root.destroy()])
         guardar_btn.grid(row=3, column=0, columnspan=2, pady=20)
 
         # Ejecutar la ventana
@@ -260,7 +273,15 @@ def run_assistant() -> None:
                     talk(directory.search_google(search))
 
             elif commands["weather"] in command or commands["weather_alt"] in command:
-                talk(directory.check_weather())
+                output_weather = directory.check_weather()
+                if isinstance(output_weather, tuple) and len(output_weather) == 3:
+                    weather_code, temperature, city = output_weather
+                    translated_weather = _(weather_code)
+                    text = _("The weather in {city} is {weather} with a temperature of {temperature} degrees.")
+                    final_output = text.format(city=city, weather=translated_weather, temperature=temperature)
+                    talk(final_output)
+                else:
+                    talk(output_weather)
 
             elif commands["open"] in command:
                 talk(_("Which application should I open?"))

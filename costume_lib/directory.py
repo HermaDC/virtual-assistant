@@ -9,7 +9,7 @@ meses = {
     "julio": "07", "agosto": "08","septiembre": "09", "octubre": "10", "noviembre": "11", "diciembre": "12"
 }
 WEATHER_DICT = {
-    0: "Clear sky",
+    0: "Sunny",
     1: "Mostly clear",
     2: "Partly cloudy",
     3: "Cloudy",
@@ -43,6 +43,8 @@ def send_whatsapp_message(contact: str, mensage: str) -> str:
             pywhatkit.sendwhatmsg_instantly(numero, mensage)
             return(f"Message sent to: {numero}, message: {mensage}")
         return "Person not found"  # Already in messages.po
+    # Ensure a string is always returned
+    return "Invalid contact format"  # Already in messages.po
 
 # Reproducir videos de YouTube
 def search_google(search:str="") -> str:
@@ -65,8 +67,7 @@ def check_weather():
         print(f"Detected location: {city}, {region}, {country}")
         print(f"Coordinates: Latitude {latitude}, Longitude {longitude}")
     except requests.RequestException as e:
-        print("Error while getting the location:", e)
-        return None, None
+        return "Error while getting the location:", e
 
     if latitude and longitude:
         try:
@@ -103,7 +104,7 @@ def read_notes() -> str:
 
 def create_contact(nom: str="", number: str="", mail: str="") -> None|str:
     num = number.replace("más", "+").replace(" ", "")
-    email = mail.replace("arroba", "@").replace("punto", ".").replace(" ", "")
+    email = mail.replace("arroba", "@").replace("punto", ".").replace(" ", "").replace("dot", ".").replace("at", "@")
 
     return (agenda.add_contact(nom, num, email))
 def delete_contact(name: str):

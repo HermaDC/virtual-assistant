@@ -242,3 +242,9 @@ msgstr ""
 
 msgid "I don't understand that command. Can you repeat it?"
 msgstr ""
+
+msgid "The weather in {city} is {weather} with a temperature of {temperature} degrees."
+msgstr "The weather in {city} is {weather} with a temperature of {temperature} degrees."
+
+msgid "Invalid contact format"
+msgstr "Invalid contact format"

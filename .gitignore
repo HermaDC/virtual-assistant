@@ -3,6 +3,7 @@ venv/
 __pycache__/
 build/
 utilities/
+.pytest_cache/
 #rutas de ejecutables
 output/
 
