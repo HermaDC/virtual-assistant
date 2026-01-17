@@ -3,4 +3,4 @@ pyttsx3
 pywhatkit
 pystray
 pillow
-tkinter
+requests
